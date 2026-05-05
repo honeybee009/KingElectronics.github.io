@@ -1,0 +1,1958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>King Electronics – Lucknow ka No.1 Electronics Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --red:#E8001C;--red-dark:#b80016;--red-light:#ff1a35;
+    --black:#0a0a0a;--dark:#111;--dark2:#1a1a1a;
+    --gray:#6b7280;--gray-light:#f3f4f6;--gray-mid:#e5e7eb;
+    --white:#fff;--gold:#f59e0b;
+    --font-display:'Rajdhani',sans-serif;
+    --font-body:'DM Sans',sans-serif;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:var(--font-body);background:#fff;color:var(--black);overflow-x:hidden}
+  .rajdhani{font-family:var(--font-display)}
+  input,select,textarea,button{font-family:var(--font-body)}
+
+  /* Scrollbar */
+  ::-webkit-scrollbar{width:6px}
+  ::-webkit-scrollbar-track{background:#f1f1f1}
+  ::-webkit-scrollbar-thumb{background:var(--red);border-radius:3px}
+
+  /* Animations */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  .fade-up{animation:fadeUp .5s ease forwards}
+  .pulse{animation:pulse 2s infinite}
+
+  /* Top bar */
+  .topbar{background:var(--black);color:#ccc;font-size:12px;padding:6px 0}
+  .topbar-inner{max-width:1280px;margin:0 auto;padding:0 16px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+  .topbar a{color:#ccc;text-decoration:none}
+  .topbar a:hover{color:var(--red)}
+  .topbar-left,.topbar-right{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+
+  /* Header */
+  .header{background:#fff;border-bottom:1px solid var(--gray-mid);position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+  .header-inner{max-width:1280px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px}
+  .logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+  .logo-crown{width:36px;height:36px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px}
+  .logo-text{line-height:1}
+  .logo-name{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--red);letter-spacing:1px}
+  .logo-tag{font-size:10px;color:var(--gray);font-weight:500}
+  .search-wrap{flex:1;display:flex;max-width:560px;margin:0 auto}
+  .search-input{flex:1;border:2px solid var(--gray-mid);border-right:none;border-radius:8px 0 0 8px;padding:10px 16px;font-size:14px;outline:none;transition:.2s}
+  .search-input:focus{border-color:var(--red)}
+  .search-cat{border:2px solid var(--gray-mid);border-left:1px solid var(--gray-mid);border-right:none;padding:10px 12px;font-size:13px;background:#f9f9f9;cursor:pointer;outline:none}
+  .search-btn{background:var(--red);color:#fff;border:none;padding:10px 18px;border-radius:0 8px 8px 0;cursor:pointer;font-size:16px;transition:.2s}
+  .search-btn:hover{background:var(--red-dark)}
+  .header-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+  .wa-btn-header{display:flex;align-items:center;gap:6px;background:#25D366;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;white-space:nowrap}
+  .cart-btn{position:relative;background:none;border:none;cursor:pointer;font-size:22px;padding:4px}
+  .cart-badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:10px;font-weight:700;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+  /* Nav */
+  .nav{background:var(--red)}
+  .nav-inner{max-width:1280px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:0}
+  .nav-all{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,.2);color:#fff;padding:12px 20px;font-weight:600;font-size:14px;cursor:pointer;border:none;white-space:nowrap}
+  .nav-link{color:#fff;text-decoration:none;padding:12px 16px;font-size:14px;font-weight:500;display:block;transition:.2s;white-space:nowrap}
+  .nav-link:hover{background:rgba(0,0,0,.15)}
+  .nav-deals{background:var(--gold);color:var(--black)!important;border-radius:4px;font-weight:700}
+
+  /* Hero */
+  .hero{background:linear-gradient(135deg,#0a0a0a 0%,#1a0005 50%,#0a0a0a 100%);color:#fff;padding:60px 16px;position:relative;overflow:hidden;min-height:420px;display:flex;align-items:center}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(232,0,28,.15) 0%,transparent 70%)}
+  .hero-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;width:100%;position:relative;z-index:1}
+  .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(232,0,28,.2);border:1px solid rgba(232,0,28,.4);color:var(--red-light);padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:.5px;margin-bottom:16px}
+  .hero-h1{font-family:var(--font-display);font-size:clamp(32px,5vw,58px);font-weight:700;line-height:1.05;margin-bottom:8px}
+  .hero-h1 span{color:var(--red-light)}
+  .hero-sub{font-size:15px;color:#aaa;margin-bottom:24px;line-height:1.5}
+  .hero-trust{display:flex;gap:20px;margin-bottom:28px;flex-wrap:wrap}
+  .hero-trust-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#ccc}
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+  .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:#fff;padding:13px 24px;border-radius:8px;font-weight:700;font-size:15px;border:none;cursor:pointer;text-decoration:none;transition:.2s}
+  .btn-primary:hover{background:var(--red-dark);transform:translateY(-1px)}
+  .btn-wa{display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;padding:13px 24px;border-radius:8px;font-weight:700;font-size:15px;border:none;cursor:pointer;text-decoration:none;transition:.2s}
+  .btn-wa:hover{background:#128C7E;transform:translateY(-1px)}
+  .hero-img-wrap{position:relative;display:flex;align-items:center;justify-content:center}
+  .hero-circle{width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(232,0,28,.2) 0%,transparent 70%);border:1px solid rgba(232,0,28,.3);display:flex;align-items:center;justify-content:center;animation:float 4s ease-in-out infinite}
+  .hero-products{display:flex;gap:16px;align-items:center}
+  .hero-product-img{width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 8px 24px rgba(232,0,28,.3))}
+  .hero-badge-corner{position:absolute;bottom:16px;right:0;background:var(--red);color:#fff;padding:10px 16px;border-radius:12px;text-align:center;font-family:var(--font-display);font-weight:700;font-size:13px;line-height:1.2}
+
+  /* Trust strip */
+  .trust-strip{background:#fff;border-bottom:1px solid var(--gray-mid);padding:16px 0}
+  .trust-inner{max-width:1280px;margin:0 auto;padding:0 16px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .trust-item{display:flex;align-items:center;gap:10px;font-size:13px}
+  .trust-icon{width:36px;height:36px;border-radius:8px;background:rgba(232,0,28,.08);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+  .trust-text strong{display:block;font-weight:600;font-size:13px}
+  .trust-text span{color:var(--gray);font-size:11px}
+
+  /* Section */
+  .section{padding:48px 16px}
+  .section-inner{max-width:1280px;margin:0 auto}
+  .section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+  .section-title{font-family:var(--font-display);font-size:28px;font-weight:700}
+  .section-title span{color:var(--red)}
+  .view-all{color:var(--red);text-decoration:none;font-size:14px;font-weight:600;display:flex;align-items:center;gap:4px}
+  .view-all:hover{text-decoration:underline}
+
+  /* Category cards */
+  .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .cat-card{border-radius:16px;overflow:hidden;position:relative;cursor:pointer;aspect-ratio:3/2;display:flex;align-items:flex-end;transition:.3s}
+  .cat-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.15)}
+  .cat-card-img{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:72px}
+  .cat-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 60%)}
+  .cat-card-content{position:relative;z-index:1;padding:16px;color:#fff;width:100%}
+  .cat-card-name{font-family:var(--font-display);font-size:20px;font-weight:700}
+  .cat-card-tag{font-size:11px;color:#ccc;margin-bottom:8px}
+  .cat-explore{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:5px 12px;border-radius:6px;font-size:12px;font-weight:600}
+  .cat-ac{background:linear-gradient(135deg,#0066cc,#003d7a)}
+  .cat-fridge{background:linear-gradient(135deg,#166534,#052e16)}
+  .cat-tv{background:linear-gradient(135deg,#7c2d12,#431407)}
+  .cat-appliances{background:linear-gradient(135deg,#581c87,#2e1065)}
+
+  /* Product card */
+  .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+  .product-card{border:1px solid var(--gray-mid);border-radius:12px;overflow:hidden;background:#fff;transition:.3s;cursor:pointer}
+  .product-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.12);transform:translateY(-4px);border-color:var(--red)}
+  .product-card-img{height:180px;background:var(--gray-light);display:flex;align-items:center;justify-content:center;font-size:64px;position:relative;overflow:hidden}
+  .product-badge{position:absolute;top:8px;left:8px;background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px}
+  .product-badge-type{position:absolute;top:8px;right:8px;background:var(--black);color:#fff;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px}
+  .product-card-body{padding:14px}
+  .product-card-name{font-weight:600;font-size:14px;line-height:1.4;margin-bottom:6px;color:var(--black)}
+  .product-rating{display:flex;align-items:center;gap:4px;margin-bottom:8px}
+  .stars{color:var(--gold);font-size:12px}
+  .rating-count{font-size:11px;color:var(--gray)}
+  .product-price{display:flex;align-items:baseline;gap:6px;margin-bottom:4px}
+  .price-current{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--red)}
+  .price-mrp{font-size:13px;color:var(--gray);text-decoration:line-through}
+  .price-off{font-size:12px;color:#16a34a;font-weight:700}
+  .product-card-actions{display:flex;gap:6px;margin-top:10px}
+  .btn-call{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;border:2px solid var(--red);color:var(--red);background:#fff;padding:8px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;transition:.2s}
+  .btn-call:hover{background:var(--red);color:#fff}
+  .btn-wa-sm{display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:#25D366;color:#fff;border-radius:7px;border:none;cursor:pointer;font-size:16px;transition:.2s;flex-shrink:0}
+  .btn-wa-sm:hover{background:#128C7E}
+
+  /* WhatsApp banner */
+  .wa-banner{background:linear-gradient(135deg,#075E54,#128C7E);color:#fff;padding:48px 16px;position:relative;overflow:hidden}
+  .wa-banner::before{content:'';position:absolute;right:-80px;top:-80px;width:300px;height:300px;background:rgba(255,255,255,.05);border-radius:50%}
+  .wa-banner-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
+  .wa-banner-title{font-family:var(--font-display);font-size:clamp(24px,4vw,40px);font-weight:700;margin-bottom:8px}
+  .wa-banner-title span{color:#25D366}
+  .wa-banner-sub{font-size:14px;color:rgba(255,255,255,.8);margin-bottom:24px}
+  .wa-join-btn{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:14px 28px;border-radius:10px;font-weight:700;font-size:16px;text-decoration:none;transition:.2s;border:none;cursor:pointer}
+  .wa-join-btn:hover{background:#1ebe59;transform:scale(1.02)}
+  .wa-phone-mock{background:rgba(255,255,255,.1);border-radius:16px;padding:16px;width:240px;font-size:12px}
+  .wa-msg{background:#fff;color:#111;padding:10px 14px;border-radius:10px 10px 10px 2px;font-size:12px;margin-bottom:8px;line-height:1.4}
+  .wa-msg-reply{background:#dcf8c6;color:#111;padding:10px 14px;border-radius:10px 10px 2px 10px;font-size:12px;text-align:right}
+
+  /* Local banner */
+  .local-banner{background:linear-gradient(135deg,var(--black),#1a1a2e);color:#fff;padding:40px 16px;text-align:center}
+  .local-banner-inner{max-width:1280px;margin:0 auto}
+  .local-banner-title{font-family:var(--font-display);font-size:clamp(20px,3vw,34px);font-weight:700;margin-bottom:8px}
+  .local-banner-title span{color:var(--red-light)}
+  .local-features{display:flex;justify-content:center;gap:40px;margin-top:24px;flex-wrap:wrap}
+  .local-feature{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:13px;color:#ccc}
+  .local-feature strong{color:#fff;font-size:14px}
+
+  /* Footer */
+  .footer{background:var(--black);color:#ccc;padding:40px 16px 0}
+  .footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:32px}
+  .footer-brand{}
+  .footer-logo-text{font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--red);margin-bottom:8px}
+  .footer-desc{font-size:13px;line-height:1.6;color:#999;margin-bottom:16px}
+  .footer-socials{display:flex;gap:10px}
+  .social-btn{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:.2s;text-decoration:none;color:#fff}
+  .social-btn:hover{background:var(--red)}
+  .footer-h{font-family:var(--font-display);font-size:15px;font-weight:700;color:#fff;margin-bottom:14px}
+  .footer-links{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .footer-links a{color:#999;text-decoration:none;font-size:13px;transition:.2s}
+  .footer-links a:hover{color:var(--red)}
+  .footer-contact-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:#999;margin-bottom:10px}
+  .footer-subscribe{display:flex;gap:0;margin-top:12px}
+  .footer-email{flex:1;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;padding:9px 12px;border-radius:6px 0 0 6px;font-size:13px;outline:none}
+  .footer-sub-btn{background:var(--red);color:#fff;border:none;padding:9px 14px;border-radius:0 6px 6px 0;cursor:pointer;font-size:14px}
+  .footer-bottom{border-top:1px solid rgba(255,255,255,.08);margin-top:32px;padding:16px 0;text-align:center;font-size:12px;color:#555}
+
+  /* Product detail */
+  .pd-wrap{max-width:1280px;margin:0 auto;padding:24px 16px}
+  .breadcrumb{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--gray);margin-bottom:20px;flex-wrap:wrap}
+  .breadcrumb a{color:var(--gray);text-decoration:none}
+  .breadcrumb a:hover{color:var(--red)}
+  .breadcrumb-sep{color:var(--gray-mid)}
+  .pd-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  .pd-gallery{}
+  .pd-main-img{background:var(--gray-light);border-radius:12px;height:400px;display:flex;align-items:center;justify-content:center;font-size:120px;position:relative;margin-bottom:12px;border:1px solid var(--gray-mid)}
+  .pd-thumbnails{display:flex;gap:8px}
+  .pd-thumb{width:72px;height:72px;border-radius:8px;border:2px solid var(--gray-mid);background:var(--gray-light);display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;transition:.2s}
+  .pd-thumb.active,.pd-thumb:hover{border-color:var(--red)}
+  .pd-info{}
+  .pd-brand{font-size:18px;font-weight:700;color:#003087;margin-bottom:6px}
+  .pd-title{font-family:var(--font-display);font-size:clamp(20px,3vw,28px);font-weight:700;line-height:1.2;margin-bottom:10px}
+  .pd-rating-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .pd-rating-badge{background:var(--gold);color:#fff;padding:3px 8px;border-radius:4px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:4px}
+  .pd-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+  .pd-tag{background:var(--gray-light);border:1px solid var(--gray-mid);color:var(--black);padding:4px 10px;border-radius:20px;font-size:12px;font-weight:500}
+  .pd-price-row{margin-bottom:8px}
+  .pd-price-current{font-family:var(--font-display);font-size:36px;font-weight:700;color:var(--red)}
+  .pd-price-mrp{font-size:16px;color:var(--gray);text-decoration:line-through;margin-left:10px}
+  .pd-price-off{font-size:14px;color:#16a34a;font-weight:700;margin-left:6px}
+  .pd-tax{font-size:12px;color:var(--gray);margin-bottom:14px}
+  .pd-best-price{background:rgba(232,0,28,.06);border:1px solid rgba(232,0,28,.2);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--red)}
+  .pd-best-price strong{display:block;font-size:14px}
+  .pd-delivery{display:flex;align-items:center;gap:8px;background:var(--gray-light);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:13px}
+  .pd-features{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
+  .pd-feature{text-align:center;padding:10px;background:var(--gray-light);border-radius:8px;font-size:11px;color:var(--gray)}
+  .pd-feature strong{display:block;font-size:12px;color:var(--black);margin-bottom:2px}
+  .pd-cta-primary{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;border:none;padding:15px;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;text-decoration:none;transition:.2s;margin-bottom:10px}
+  .pd-cta-primary:hover{background:#128C7E}
+  .pd-cta-secondary{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:var(--black);border:2px solid var(--gray-mid);padding:13px;border-radius:10px;font-size:15px;font-weight:600;cursor:pointer;transition:.2s}
+  .pd-cta-secondary:hover{border-color:var(--red);color:var(--red)}
+  .pd-offers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:16px 0}
+  .pd-offer{border:1px solid var(--gray-mid);border-radius:8px;padding:10px;font-size:11px;color:var(--black);line-height:1.4}
+  .pd-offer-icon{font-size:20px;margin-bottom:4px}
+  .pd-offer-title{font-weight:700;color:var(--red);margin-bottom:2px}
+  .pd-tabs{display:flex;gap:0;border-bottom:2px solid var(--gray-mid);margin-bottom:20px;margin-top:32px}
+  .pd-tab{padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:.2s;color:var(--gray)}
+  .pd-tab.active{color:var(--red);border-bottom-color:var(--red)}
+  .pd-spec-table{width:100%;border-collapse:collapse}
+  .pd-spec-table tr{border-bottom:1px solid var(--gray-mid)}
+  .pd-spec-table td{padding:10px 14px;font-size:14px}
+  .pd-spec-table td:first-child{color:var(--gray);width:40%;background:var(--gray-light)}
+  .pd-spec-table td:last-child{font-weight:500}
+  .pd-why{margin-top:16px}
+  .pd-why-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:14px}
+  .pd-why-icon{color:var(--red);margin-top:1px;flex-shrink:0}
+  .pd-reviews-wrap{display:grid;grid-template-columns:1fr 2fr;gap:24px;margin-top:16px}
+  .pd-review-score{text-align:center}
+  .pd-review-big{font-family:var(--font-display);font-size:64px;font-weight:700;color:var(--black);line-height:1}
+  .pd-review-bar{display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:13px}
+  .bar-track{flex:1;height:6px;background:var(--gray-mid);border-radius:3px;overflow:hidden}
+  .bar-fill{height:100%;background:var(--gold);border-radius:3px}
+  .review-card{background:var(--gray-light);border-radius:10px;padding:14px;margin-bottom:10px}
+  .review-stars{color:var(--gold);font-size:13px;margin-bottom:4px}
+  .review-text{font-size:13px;margin-bottom:6px}
+  .review-author{font-size:12px;color:var(--gray);display:flex;gap:8px;align-items:center}
+  .verified{color:#16a34a;font-weight:600}
+
+  /* Order confirmation */
+  .oc-wrap{max-width:960px;margin:0 auto;padding:32px 16px}
+  .oc-success{text-align:center;margin-bottom:32px;animation:fadeUp .5s ease}
+  .oc-check{width:72px;height:72px;background:#22c55e;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:36px;color:#fff}
+  .oc-title{font-family:var(--font-display);font-size:36px;font-weight:700;margin-bottom:4px}
+  .oc-sub{color:var(--red);font-weight:600;font-size:16px;margin-bottom:8px}
+  .oc-msg{font-size:14px;color:var(--gray)}
+  .oc-id-box{border:2px dashed var(--red);border-radius:10px;padding:14px 20px;display:inline-block;margin-top:16px;text-align:center}
+  .oc-id-label{font-size:12px;color:var(--gray);margin-bottom:4px}
+  .oc-id{font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--red);letter-spacing:2px}
+  .oc-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px}
+  .oc-card{border:1px solid var(--gray-mid);border-radius:12px;padding:20px}
+  .oc-card-title{font-family:var(--font-display);font-size:16px;font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--gray-mid)}
+  .oc-steps{display:flex;align-items:center;justify-content:space-between;margin:16px 0}
+  .oc-step{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:12px;color:var(--gray);flex:1}
+  .oc-step-icon{width:44px;height:44px;border-radius:50%;background:var(--gray-light);display:flex;align-items:center;justify-content:center;font-size:20px}
+  .oc-step-line{flex:1;height:2px;background:var(--gray-mid);max-width:40px}
+  .oc-ctas{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+  .oc-wa-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:#fff;padding:12px;border-radius:8px;font-weight:700;font-size:14px;border:none;cursor:pointer;text-decoration:none;transition:.2s}
+  .oc-call-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:var(--black);border:2px solid var(--gray-mid);padding:12px;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer;text-decoration:none;transition:.2s}
+  .oc-call-btn:hover{border-color:var(--red);color:var(--red)}
+  .oc-summary-item{display:flex;justify-content:space-between;font-size:14px;margin-bottom:8px}
+  .oc-summary-item.total{font-weight:700;font-size:16px;border-top:1px solid var(--gray-mid);padding-top:10px;margin-top:4px}
+  .oc-savings{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);border-radius:8px;padding:10px 14px;font-size:13px;color:#16a34a;font-weight:600;margin-top:10px}
+  .oc-delivery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+  .oc-delivery-item{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--gray)}
+  .oc-delivery-item strong{font-size:13px;color:var(--black)}
+  .oc-delivery-icon{font-size:20px;margin-bottom:4px}
+
+  /* Admin */
+  .admin-layout{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+  .admin-sidebar{background:#fff;border-right:1px solid var(--gray-mid);position:sticky;top:0;height:100vh;overflow-y:auto;padding:0}
+  .admin-logo{padding:20px 20px 16px;border-bottom:1px solid var(--gray-mid)}
+  .admin-logo-text{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--red)}
+  .admin-logo-sub{font-size:11px;color:var(--gray)}
+  .admin-nav-section{padding:16px 12px 4px;font-size:10px;font-weight:700;letter-spacing:.8px;color:var(--gray);text-transform:uppercase}
+  .admin-nav-link{display:flex;align-items:center;gap:10px;padding:9px 16px;font-size:14px;color:var(--gray);cursor:pointer;border-radius:8px;margin:2px 8px;transition:.2s;position:relative;border:none;background:none;width:calc(100% - 16px)}
+  .admin-nav-link:hover{background:var(--gray-light);color:var(--black)}
+  .admin-nav-link.active{background:rgba(232,0,28,.08);color:var(--red);font-weight:600}
+  .admin-nav-badge{background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:10px;margin-left:auto}
+  .admin-nav-new{background:#22c55e;color:#fff;font-size:10px;font-weight:700;padding:2px 6px;border-radius:10px;margin-left:auto}
+  .admin-support{margin:16px;background:var(--black);border-radius:12px;padding:16px;color:#fff}
+  .admin-support-title{font-size:13px;font-weight:700;margin-bottom:4px}
+  .admin-support-sub{font-size:11px;color:#999;margin-bottom:10px}
+  .admin-support-btn{width:100%;background:var(--red);color:#fff;border:none;padding:8px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer}
+  .admin-main{background:#f8f9fa;min-height:100vh}
+  .admin-topbar{background:#fff;border-bottom:1px solid var(--gray-mid);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+  .admin-topbar-title{font-size:20px;font-weight:700}
+  .admin-topbar-sub{font-size:13px;color:var(--gray)}
+  .admin-topbar-right{display:flex;align-items:center;gap:12px}
+  .admin-visit-btn{display:flex;align-items:center;gap:6px;border:1px solid var(--gray-mid);background:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s}
+  .admin-visit-btn:hover{border-color:var(--red);color:var(--red)}
+  .admin-notif{position:relative;cursor:pointer;font-size:20px;padding:4px}
+  .admin-notif-badge{position:absolute;top:0;right:0;background:var(--red);color:#fff;width:16px;height:16px;border-radius:50%;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .admin-avatar{width:36px;height:36px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700}
+  .admin-content{padding:24px}
+  .admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+  .stat-card{background:#fff;border-radius:12px;padding:20px;display:flex;align-items:center;gap:16px;border:1px solid var(--gray-mid)}
+  .stat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
+  .stat-value{font-family:var(--font-display);font-size:32px;font-weight:700}
+  .stat-label{font-size:13px;color:var(--gray)}
+  .admin-table-wrap{background:#fff;border-radius:12px;border:1px solid var(--gray-mid);overflow:hidden}
+  .admin-table-header{padding:16px 20px;border-bottom:1px solid var(--gray-mid);display:flex;justify-content:space-between;align-items:center}
+  .admin-table-title{font-size:18px;font-weight:700}
+  .add-btn{display:flex;align-items:center;gap:6px;background:var(--red);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:.2s}
+  .add-btn:hover{background:var(--red-dark)}
+  .admin-filters{display:flex;gap:10px;padding:14px 20px;border-bottom:1px solid var(--gray-mid);flex-wrap:wrap}
+  .admin-search{display:flex;align-items:center;gap:0;flex:1;min-width:200px}
+  .admin-search-input{flex:1;border:1px solid var(--gray-mid);padding:8px 12px;border-radius:6px 0 0 6px;font-size:13px;outline:none}
+  .admin-search-btn{border:1px solid var(--gray-mid);border-left:none;background:var(--gray-light);padding:8px 12px;border-radius:0 6px 6px 0;cursor:pointer;font-size:14px}
+  .filter-select{border:1px solid var(--gray-mid);padding:8px 12px;border-radius:6px;font-size:13px;background:#fff;cursor:pointer;outline:none}
+  .filter-btn{display:flex;align-items:center;gap:5px;border:1px solid var(--gray-mid);background:#fff;padding:8px 12px;border-radius:6px;font-size:13px;cursor:pointer}
+  .reset-btn{display:flex;align-items:center;gap:5px;border:1px solid var(--gray-mid);background:#fff;padding:8px 12px;border-radius:6px;font-size:13px;cursor:pointer;color:var(--gray)}
+  table{width:100%;border-collapse:collapse}
+  th{text-align:left;padding:12px 16px;font-size:12px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;background:var(--gray-light);border-bottom:1px solid var(--gray-mid)}
+  td{padding:14px 16px;font-size:14px;border-bottom:1px solid var(--gray-mid);vertical-align:middle}
+  tr:hover td{background:rgba(232,0,28,.02)}
+  tr:last-child td{border-bottom:none}
+  .status-active{background:rgba(34,197,94,.1);color:#16a34a;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
+  .status-inactive{background:rgba(107,114,128,.1);color:var(--gray);padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
+  .stock-ok{color:#16a34a;font-weight:600}
+  .stock-low{color:#f59e0b;font-weight:600}
+  .stock-out{color:var(--red);font-weight:600}
+  .action-btns{display:flex;gap:6px}
+  .action-btn{width:30px;height:30px;border:1px solid var(--gray-mid);background:#fff;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:.2s}
+  .action-btn:hover{border-color:var(--red);color:var(--red)}
+  .action-btn.del:hover{border-color:var(--red);background:var(--red);color:#fff}
+  .admin-pagination{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;font-size:13px;color:var(--gray);border-top:1px solid var(--gray-mid)}
+  .page-btns{display:flex;gap:4px}
+  .page-btn{width:32px;height:32px;border:1px solid var(--gray-mid);background:#fff;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;transition:.2s}
+  .page-btn.active{background:var(--red);color:#fff;border-color:var(--red)}
+  .page-btn:hover:not(.active){border-color:var(--red);color:var(--red)}
+  .prod-img-cell{width:48px;height:48px;border-radius:8px;background:var(--gray-light);display:flex;align-items:center;justify-content:center;font-size:24px}
+
+  /* Add product form */
+  .form-section{background:#fff;border:1px solid var(--gray-mid);border-radius:12px;padding:24px;margin-bottom:20px}
+  .form-section-title{font-family:var(--font-display);font-size:18px;font-weight:700;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--gray-mid)}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
+  .form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  .form-field{display:flex;flex-direction:column;gap:6px}
+  .form-label{font-size:13px;font-weight:600;color:var(--black)}
+  .form-label span{color:var(--red)}
+  .form-input{border:1px solid var(--gray-mid);border-radius:8px;padding:9px 12px;font-size:14px;outline:none;transition:.2s;background:#fff;width:100%}
+  .form-input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(232,0,28,.08)}
+  .form-select{border:1px solid var(--gray-mid);border-radius:8px;padding:9px 12px;font-size:14px;outline:none;background:#fff;cursor:pointer;width:100%}
+  .form-textarea{border:1px solid var(--gray-mid);border-radius:8px;padding:9px 12px;font-size:14px;outline:none;resize:vertical;transition:.2s;width:100%;font-family:var(--font-body)}
+  .form-textarea:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(232,0,28,.08)}
+  .char-count{font-size:11px;color:var(--gray);text-align:right;margin-top:2px}
+  .upload-area{border:2px dashed var(--gray-mid);border-radius:10px;padding:32px;text-align:center;cursor:pointer;transition:.2s;background:#fafafa}
+  .upload-area:hover{border-color:var(--red);background:rgba(232,0,28,.02)}
+  .upload-icon{font-size:32px;margin-bottom:8px}
+  .upload-text{font-size:14px;color:var(--gray)}
+  .upload-text strong{color:var(--red)}
+  .upload-sub{font-size:12px;color:var(--gray);margin-top:4px}
+  .img-preview-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px}
+  .img-preview-item{border-radius:8px;border:2px solid var(--gray-mid);background:var(--gray-light);aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:32px;position:relative;overflow:hidden}
+  .img-preview-item.main::before{content:'Main Image';position:absolute;top:0;left:0;right:0;background:rgba(232,0,28,.8);color:#fff;font-size:10px;font-weight:700;padding:3px;text-align:center}
+  .img-preview-remove{position:absolute;top:4px;right:4px;width:20px;height:20px;border-radius:50%;background:var(--red);color:#fff;border:none;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center}
+  .img-add-more{border:2px dashed var(--gray-mid);border-radius:8px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;color:var(--gray);font-size:11px;transition:.2s}
+  .img-add-more:hover{border-color:var(--red);color:var(--red)}
+  .img-tip{font-size:11px;color:var(--gray);margin-top:8px}
+  .spec-row{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;margin-bottom:10px;align-items:center}
+  .add-spec-btn{display:flex;align-items:center;gap:6px;background:none;border:1px dashed var(--gray-mid);color:var(--gray);padding:8px 14px;border-radius:8px;font-size:13px;cursor:pointer;transition:.2s}
+  .add-spec-btn:hover{border-color:var(--red);color:var(--red)}
+  .del-spec{border:none;background:none;color:var(--red);cursor:pointer;font-size:16px;padding:4px}
+  .toggle-wrap{display:flex;align-items:center;gap:10px}
+  .toggle{width:44px;height:24px;border-radius:12px;background:var(--gray-mid);position:relative;cursor:pointer;transition:.3s;border:none;flex-shrink:0}
+  .toggle.on{background:#22c55e}
+  .toggle::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.3s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+  .toggle.on::after{left:23px}
+  .toggle-label{font-size:14px;font-weight:600}
+  .toggle-sublabel{font-size:12px;color:var(--gray)}
+  .pricing-note{font-size:12px;color:var(--gray);margin-top:4px}
+  .pub-card{background:#fff;border:1px solid var(--gray-mid);border-radius:12px;padding:20px;margin-bottom:16px;position:sticky;top:80px}
+  .save-btn{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--red);color:#fff;border:none;padding:11px 20px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;transition:.2s;width:100%}
+  .save-btn:hover{background:var(--red-dark)}
+  .discard-btn{display:flex;align-items:center;justify-content:center;background:#fff;color:var(--black);border:1px solid var(--gray-mid);padding:10px;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;width:100%;margin-bottom:8px}
+  .discard-btn:hover{border-color:var(--red);color:var(--red)}
+  .pub-section-title{font-family:var(--font-display);font-size:15px;font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--gray-mid)}
+  .toggle-option{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+  .shipping-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+
+  /* Floating WA */
+  .wa-float{position:fixed;bottom:24px;right:24px;z-index:999;width:56px;height:56px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 4px 20px rgba(37,211,102,.4);cursor:pointer;transition:.3s;text-decoration:none;animation:pulse 3s infinite}
+  .wa-float:hover{background:#128C7E;transform:scale(1.1)}
+
+  /* Marquee */
+  .marquee-wrap{background:var(--black);color:#fff;padding:10px 0;overflow:hidden}
+  .marquee-inner{display:flex;gap:0;white-space:nowrap;animation:marquee 20s linear infinite}
+  .marquee-item{display:inline-flex;align-items:center;gap:8px;padding:0 32px;font-size:13px;font-weight:600;letter-spacing:.5px}
+  .marquee-sep{color:var(--red)}
+
+  /* Loading spinner */
+  .spinner{width:40px;height:40px;border:3px solid var(--gray-mid);border-top-color:var(--red);border-radius:50%;animation:spin .7s linear infinite}
+
+  /* Admin login */
+  .admin-login{min-height:100vh;background:var(--gray-light);display:flex;align-items:center;justify-content:center;padding:20px}
+  .login-card{background:#fff;border-radius:16px;padding:40px;width:100%;max-width:400px;border:1px solid var(--gray-mid)}
+  .login-logo{text-align:center;margin-bottom:24px}
+  .login-title{font-family:var(--font-display);font-size:28px;font-weight:700;text-align:center;margin-bottom:4px}
+  .login-sub{font-size:14px;color:var(--gray);text-align:center;margin-bottom:24px}
+  .login-error{background:rgba(232,0,28,.08);border:1px solid rgba(232,0,28,.2);color:var(--red);padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:14px}
+
+  /* Confetti dots */
+  .confetti{position:absolute;top:0;left:0;right:0;pointer-events:none;overflow:hidden;height:100px}
+  .confetti-dot{position:absolute;top:-10px;width:8px;height:8px;border-radius:2px;animation:confettiDrop 1.5s ease-out forwards}
+  @keyframes confettiDrop{to{transform:translateY(120px) rotate(360deg);opacity:0}}
+
+  /* Responsive */
+  @media(max-width:1024px){
+    .cat-grid{grid-template-columns:repeat(2,1fr)}
+    .footer-inner{grid-template-columns:1fr 1fr;gap:24px}
+    .admin-layout{grid-template-columns:1fr}
+    .admin-sidebar{display:none}
+    .pd-grid{grid-template-columns:1fr}
+    .oc-grid{grid-template-columns:1fr}
+    .admin-stats{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(max-width:768px){
+    .hero-inner{grid-template-columns:1fr}
+    .hero-img-wrap{display:none}
+    .cat-grid{grid-template-columns:repeat(2,1fr)}
+    .product-grid{grid-template-columns:repeat(2,1fr)}
+    .wa-banner-inner{grid-template-columns:1fr}
+    .wa-phone-mock{display:none}
+    .footer-inner{grid-template-columns:1fr 1fr}
+    .pd-features{grid-template-columns:repeat(2,1fr)}
+    .pd-offers{grid-template-columns:1fr}
+    .oc-delivery-grid{grid-template-columns:repeat(2,1fr)}
+    .admin-stats{grid-template-columns:1fr 1fr}
+    .form-grid{grid-template-columns:1fr}
+    .form-grid-2{grid-template-columns:1fr}
+    .img-preview-grid{grid-template-columns:repeat(3,1fr)}
+    .pd-reviews-wrap{grid-template-columns:1fr}
+    .hero-h1{font-size:28px}
+  }
+  @media(max-width:480px){
+    .cat-grid{grid-template-columns:1fr 1fr}
+    .product-grid{grid-template-columns:1fr 1fr}
+    .footer-inner{grid-template-columns:1fr}
+    .topbar-left{display:none}
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const WA_NUMBER = "919415750004";
+const PHONE = "9415750004";
+
+const PRODUCTS = [
+  {id:1,name:"LG 1.5 Ton 5 Star Inverter Split AC",brand:"LG",category:"Air Conditioners",price:36990,mrp:42990,discount:14,rating:4.7,reviews:512,emoji:"🌬️",tags:["Inverter","5 Star","Energy Efficient"],specs:{Capacity:"1.5 Ton",Rating:"5 Star",Compressor:"Dual Inverter",Refrigerant:"R32",Warranty:"5 Years Compressor"},highlight:"Power Chill Operation for instant cooling",stock:15,sku:"AC-LG-15-5S",status:"Active"},
+  {id:2,name:"LG 2 Ton 3 Star Inverter Split AC",brand:"LG",category:"Air Conditioners",price:44990,mrp:52990,discount:15,rating:4.5,reviews:348,emoji:"❄️",tags:["Inverter","3 Star","2 Ton"],specs:{Capacity:"2 Ton",Rating:"3 Star",Compressor:"Dual Inverter",Refrigerant:"R32",Warranty:"5 Years Compressor"},highlight:"DUALCOOL Inverter technology",stock:10,sku:"AC-LG-20-3S",status:"Active"},
+  {id:3,name:"LG 1.5 Ton 3 Star Fixed Speed Split AC",brand:"LG",category:"Air Conditioners",price:28990,mrp:34990,discount:17,rating:4.3,reviews:276,emoji:"💨",tags:["Fixed Speed","3 Star","Budget"],specs:{Capacity:"1.5 Ton",Rating:"3 Star",Compressor:"Reciprocating",Refrigerant:"R22",Warranty:"1 Year Product"},highlight:"Monsoon Comfort – Auto cleaning",stock:22,sku:"AC-LG-15-3FS",status:"Active"},
+  {id:4,name:"LG 1 Ton 5 Star Window AC",brand:"LG",category:"Air Conditioners",price:24990,mrp:30990,discount:19,rating:4.4,reviews:198,emoji:"🪟",tags:["Window AC","5 Star","1 Ton"],specs:{Capacity:"1 Ton",Rating:"5 Star",Type:"Window",Refrigerant:"R32",Warranty:"1 Year Product"},highlight:"Easy Filter Plus – Washable filter",stock:8,sku:"AC-LG-10-5W",status:"Active"},
+  {id:5,name:"LG 1.5 Ton 5 Star Dual Inverter Split AC – Art Cool",brand:"LG",category:"Air Conditioners",price:52990,mrp:64990,discount:18,rating:4.8,reviews:164,emoji:"🎨",tags:["Art Cool","5 Star","Premium"],specs:{Capacity:"1.5 Ton",Rating:"5 Star",Compressor:"Dual Inverter",Type:"Art Cool Premier",Warranty:"10 Years Compressor"},highlight:"Art Cool – Stylish design for modern homes",stock:5,sku:"AC-LG-15-5AC",status:"Active"},
+  {id:6,name:"LG 1.5 Ton 4 Star AI Dual Inverter Split AC",brand:"LG",category:"Air Conditioners",price:40990,mrp:48990,discount:16,rating:4.6,reviews:289,emoji:"🤖",tags:["AI Inverter","4 Star","Smart"],specs:{Capacity:"1.5 Ton",Rating:"4 Star",Compressor:"AI Dual Inverter",Feature:"Wi-Fi Control",Warranty:"10 Years Compressor"},highlight:"AI Convertible 6-in-1 Cooling modes",stock:12,sku:"AC-LG-15-4AI",status:"Active"},
+  {id:7,name:"LG 2 Ton 5 Star AI Dual Inverter Split AC",brand:"LG",category:"Air Conditioners",price:58990,mrp:72990,discount:19,rating:4.9,reviews:96,emoji:"⭐",tags:["AI","5 Star","2 Ton","Top Seller"],specs:{Capacity:"2 Ton",Rating:"5 Star",Compressor:"AI Dual Inverter",Feature:"Wi-Fi + ThinQ App",Warranty:"10 Years Compressor"},highlight:"ThinQ Smart Control from anywhere",stock:3,sku:"AC-LG-20-5AI",status:"Active"},
+  {id:8,name:"LG 0.75 Ton 3 Star Inverter Split AC",brand:"LG",category:"Air Conditioners",price:22990,mrp:27990,discount:18,rating:4.2,reviews:142,emoji:"🌀",tags:["Inverter","3 Star","Small Room"],specs:{Capacity:"0.75 Ton",Rating:"3 Star",Compressor:"Dual Inverter",Refrigerant:"R32",Warranty:"5 Years Compressor"},highlight:"Perfect for small rooms up to 90 sq ft",stock:18,sku:"AC-LG-075-3S",status:"Active"},
+];
+
+const CATEGORIES = ["Air Conditioners","Refrigerators","Televisions","Home Appliances","Accessories"];
+const BRANDS = ["LG","Samsung","Daikin","Voltas","Whirlpool","Godrej","IFB","Blue Star"];
+
+function waLink(product) {
+  const msg = encodeURIComponent(`Hi, I'm interested in ${product ? product.name : 'your products'}. Please share the best price.`);
+  return `https://wa.me/${WA_NUMBER}?text=${msg}`;
+}
+
+// ─── COMPONENTS ──────────────────────────────────────────────────────────────
+function StarRating({ rating }) {
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5;
+  return (
+    <span className="stars">
+      {"★".repeat(full)}{half ? "½" : ""}{"☆".repeat(5 - full - (half?1:0))}
+    </span>
+  );
+}
+
+function FloatingWA({ product }) {
+  return (
+    <a href={waLink(product)} target="_blank" rel="noopener noreferrer" className="wa-float" title="Chat on WhatsApp">
+      💬
+    </a>
+  );
+}
+
+// ─── TOPBAR ──────────────────────────────────────────────────────────────────
+function TopBar() {
+  return (
+    <div className="topbar">
+      <div className="topbar-inner">
+        <div className="topbar-left">
+          <span>📍 Proudly Serving Lucknow</span>
+          <span>🏆 Best Prices Guarantee</span>
+        </div>
+        <div className="topbar-right">
+          <span>📦 Track Order</span>
+          <span>💬 Help & Support</span>
+          <span>👤 My Account</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── HEADER ──────────────────────────────────────────────────────────────────
+function Header({ page, setPage }) {
+  return (
+    <header className="header">
+      <div className="header-inner">
+        <div className="logo" onClick={() => setPage("home")} style={{cursor:"pointer"}}>
+          <div className="logo-crown">👑</div>
+          <div className="logo-text">
+            <div className="logo-name">KING ELECTRONICS</div>
+            <div className="logo-tag">Apki Choice. Humari Priority.</div>
+          </div>
+        </div>
+        <div className="search-wrap">
+          <input className="search-input" placeholder="Search for products, brands..." />
+          <select className="search-cat">
+            <option>All Categories</option>
+            {CATEGORIES.map(c => <option key={c}>{c}</option>)}
+          </select>
+          <button className="search-btn">🔍</button>
+        </div>
+        <div className="header-actions">
+          <a href={waLink(null)} target="_blank" className="wa-btn-header">
+            💬 Chat on WhatsApp
+          </a>
+          <button className="cart-btn">
+            🛒
+            <span className="cart-badge">0</span>
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+// ─── NAV ─────────────────────────────────────────────────────────────────────
+function Nav({ setPage }) {
+  return (
+    <nav className="nav">
+      <div className="nav-inner">
+        <button className="nav-all">☰ All Categories</button>
+        {["Air Conditioners","Refrigerators","Televisions","Home Appliances","Accessories"].map(c => (
+          <a key={c} className="nav-link" href="#" onClick={e => { e.preventDefault(); setPage("products"); }}>{c}</a>
+        ))}
+        <a className="nav-link nav-deals" href="#">🔥 Deals HOT</a>
+        <a className="nav-link" href="#">Contact Us</a>
+      </div>
+    </nav>
+  );
+}
+
+// ─── MARQUEE ─────────────────────────────────────────────────────────────────
+function MarqueeBanner() {
+  const items = [
+    { icon:"🔥", text:"LUCKNOW KI SHAAN – KING ELECTRONICS KE SAATH!" },
+    { icon:"⭐", text:"BEST BRANDS" },
+    { icon:"💰", text:"BEST PRICES" },
+    { icon:"⚡", text:"FAST DELIVERY" },
+    { icon:"🔧", text:"EXPERT INSTALLATION" },
+  ];
+  return (
+    <div className="marquee-wrap">
+      <div className="marquee-inner">
+        {[...items,...items].map((item,i) => (
+          <span key={i} className="marquee-item">
+            <span className="marquee-sep">|</span> {item.icon} {item.text}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── HOMEPAGE ────────────────────────────────────────────────────────────────
+function HomePage({ setPage, setSelectedProduct }) {
+  return (
+    <>
+      {/* Hero */}
+      <section className="hero">
+        <div className="hero-inner">
+          <div>
+            <div className="hero-badge">📍 Lucknow Vikas Nagar Store</div>
+            <h1 className="hero-h1">
+              LUCKNOW KA<br />NO.1 ELECTRONICS<br />
+              <span>DESTINATION!</span>
+            </h1>
+            <p className="hero-sub">Top Brands. Lowest Prices. Best Deals. Sirf King Electronics!</p>
+            <div className="hero-trust">
+              <div className="hero-trust-item">✅ 100% Original Products</div>
+              <div className="hero-trust-item">🏷️ Best Price Guarantee</div>
+              <div className="hero-trust-item">⚡ Fast Delivery in Lucknow</div>
+              <div className="hero-trust-item">🔧 Expert Installation</div>
+            </div>
+            <div className="hero-ctas">
+              <button className="btn-primary" onClick={() => setPage("products")}>
+                Shop All Products →
+              </button>
+              <a href={waLink(null)} target="_blank" className="btn-wa">
+                💬 Chat on WhatsApp
+              </a>
+            </div>
+            <div style={{marginTop:16,fontSize:13,color:"#999"}}>
+              📍 Lucknow Walo ka Bharosemand Store 💛
+            </div>
+          </div>
+          <div className="hero-img-wrap">
+            <div className="hero-circle">
+              <div className="hero-products">
+                {["🌬️","📺","🧊"].map((e,i) => (
+                  <div key={i} className="hero-product-img" style={{fontSize:64,textAlign:"center"}}>{e}</div>
+                ))}
+              </div>
+            </div>
+            <div className="hero-badge-corner">
+              BEST<br />PRICES IN<br />LUCKNOW
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Strip */}
+      <div className="trust-strip">
+        <div className="trust-inner">
+          {[
+            {icon:"🏠",title:"Local Lucknow Store",sub:"Trusted by Thousands"},
+            {icon:"🛡️",title:"100% Original Products",sub:"With Brand Warranty"},
+            {icon:"💰",title:"Best Price Guarantee",sub:"We Beat Competitors"},
+            {icon:"🚚",title:"Fast Delivery in Lucknow",sub:"Quick & Reliable"},
+            {icon:"🔧",title:"Expert Installation",sub:"By Trained Technicians"},
+          ].map((t,i) => (
+            <div key={i} className="trust-item">
+              <div className="trust-icon">{t.icon}</div>
+              <div className="trust-text"><strong>{t.title}</strong><span>{t.sub}</span></div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Categories */}
+      <section className="section" style={{background:"#fff"}}>
+        <div className="section-inner">
+          <div className="section-header">
+            <h2 className="section-title">Shop by <span>Category</span></h2>
+            <a href="#" className="view-all">View All Categories →</a>
+          </div>
+          <div className="cat-grid">
+            {[
+              {name:"Air Conditioners",tag:"Thand bhi, Savings bhi!",emoji:"🌬️",cls:"cat-ac"},
+              {name:"Refrigerators",tag:"Freshness jo rahe barkarar",emoji:"🧊",cls:"cat-fridge"},
+              {name:"Televisions",tag:"Entertainment ka naya level",emoji:"📺",cls:"cat-tv"},
+              {name:"Home Appliances",tag:"Smart Home. Smart Life",emoji:"🏠",cls:"cat-appliances"},
+            ].map((cat,i) => (
+              <div key={i} className={`cat-card ${cat.cls}`} onClick={() => setPage("products")}>
+                <div className="cat-card-img">{cat.emoji}</div>
+                <div className="cat-card-overlay" />
+                <div className="cat-card-content">
+                  <div className="cat-card-name">{cat.name}</div>
+                  <div className="cat-card-tag">{cat.tag}</div>
+                  <div className="cat-explore">EXPLORE →</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Top Deals */}
+      <section className="section" style={{background:PRODUCTS.bg || "var(--gray-light)"}}>
+        <div className="section-inner">
+          <div className="section-header">
+            <h2 className="section-title">Top Deals in <span>Lucknow</span> 🏰</h2>
+            <a href="#" className="view-all" onClick={e => { e.preventDefault(); setPage("products"); }}>View All Products →</a>
+          </div>
+          <div className="product-grid">
+            {PRODUCTS.slice(0,5).map(p => (
+              <ProductCard key={p.id} product={p} setPage={setPage} setSelectedProduct={setSelectedProduct} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Local Banner */}
+      <div className="local-banner">
+        <div className="local-banner-inner">
+          <div className="local-banner-title">
+            Kyunki Hum Hain<br />
+            <span>LUCKNOW WALE</span><br />
+            Aur Lucknow Ke Liye!
+          </div>
+          <div className="local-features">
+            {[
+              {icon:"💰",label:"Best Prices in Lucknow",sub:"Guaranteed"},
+              {icon:"🛡️",label:"Genuine Products",sub:"100% Original"},
+              {icon:"👨‍💼",label:"Local Support",sub:"Hum yahin hain!"},
+              {icon:"↩️",label:"Easy Returns",sub:"No Tension"},
+            ].map((f,i) => (
+              <div key={i} className="local-feature">
+                <span style={{fontSize:24}}>{f.icon}</span>
+                <strong>{f.label}</strong>
+                <span>{f.sub}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* WhatsApp Banner */}
+      <div className="wa-banner">
+        <div className="wa-banner-inner">
+          <div>
+            <div style={{fontSize:40,marginBottom:8}}>💬</div>
+            <div className="wa-banner-title">Deals Sabse Pehle <span>WhatsApp Par!</span></div>
+            <div className="wa-banner-sub">Exclusive Offers, New Arrivals & Best Deals. Seedhe aapke WhatsApp par.</div>
+            <a href={waLink(null)} target="_blank" className="wa-join-btn">
+              JOIN WHATSAPP NOW →
+            </a>
+          </div>
+          <div className="wa-phone-mock">
+            <div style={{fontWeight:700,marginBottom:10,fontSize:13}}>👑 King Electronics<br /><span style={{color:"#25D366",fontSize:11}}>● Online</span></div>
+            <div className="wa-msg">Hey! Want exclusive deals & best offers? Join our WhatsApp broadcast now! 🎉</div>
+            <div className="wa-msg-reply">Yes! Send me deals! 😍</div>
+          </div>
+        </div>
+      </div>
+
+      {/* More products */}
+      <section className="section" style={{background:"#fff"}}>
+        <div className="section-inner">
+          <div className="section-header">
+            <h2 className="section-title">All <span>Products</span></h2>
+            <a href="#" className="view-all" onClick={e => { e.preventDefault(); setPage("products"); }}>View All →</a>
+          </div>
+          <div className="product-grid">
+            {PRODUCTS.slice(5).map(p => (
+              <ProductCard key={p.id} product={p} setPage={setPage} setSelectedProduct={setSelectedProduct} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="footer-inner">
+          <div>
+            <div className="footer-logo-text">👑 KING ELECTRONICS</div>
+            <div className="footer-desc">Lucknow ka apna electronics store. Best prices, best service, hamesha aapke saath.</div>
+            <div className="footer-socials">
+              <a href="#" className="social-btn">f</a>
+              <a href="#" className="social-btn">📷</a>
+              <a href={waLink(null)} target="_blank" className="social-btn">💬</a>
+            </div>
+          </div>
+          <div>
+            <div className="footer-h">Quick Links</div>
+            <ul className="footer-links">
+              {["About Us","Contact Us","Track Order","Return & Refund"].map(l => <li key={l}><a href="#">{l}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <div className="footer-h">Categories</div>
+            <ul className="footer-links">
+              {CATEGORIES.map(c => <li key={c}><a href="#" onClick={e => e.preventDefault()}>{c}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <div className="footer-h">Customer Service</div>
+            <ul className="footer-links">
+              {["Help & Support","Terms & Conditions","Privacy Policy","Installation Support"].map(l => <li key={l}><a href="#">{l}</a></li>)}
+            </ul>
+          </div>
+          <div>
+            <div className="footer-h">Stay Updated</div>
+            <div style={{fontSize:13,color:"#999",marginBottom:12}}>Subscribe to get the latest offers and updates.</div>
+            <div className="footer-subscribe">
+              <input className="footer-email" type="email" placeholder="Enter your email" />
+              <button className="footer-sub-btn">→</button>
+            </div>
+            <div style={{marginTop:20}}>
+              <div className="footer-contact-item">📍 Lucknow, Vikas Nagar</div>
+              <div className="footer-contact-item">📞 <a href={`tel:${PHONE}`} style={{color:"#999",textDecoration:"none"}}>+91 {PHONE}</a></div>
+              <div className="footer-contact-item">💬 <a href={waLink(null)} target="_blank" style={{color:"#25D366",textDecoration:"none"}}>Chat Now</a></div>
+              <div className="footer-contact-item">🕐 24/7 (All Days)</div>
+            </div>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <div style={{maxWidth:1280,margin:"0 auto",padding:"0 16px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:8}}>
+            <span>© 2025 King Electronics. All Rights Reserved.</span>
+            <span>Designed with ❤️ in Lucknow</span>
+          </div>
+        </div>
+      </footer>
+    </>
+  );
+}
+
+// ─── PRODUCT CARD ─────────────────────────────────────────────────────────────
+function ProductCard({ product: p, setPage, setSelectedProduct }) {
+  return (
+    <div className="product-card" onClick={() => { setSelectedProduct(p); setPage("product"); }}>
+      <div className="product-card-img">
+        <span className="product-badge">{p.discount}% OFF</span>
+        {p.tags.includes("Top Seller") && <span className="product-badge-type">TOP SELLER</span>}
+        <span style={{fontSize:72}}>{p.emoji}</span>
+      </div>
+      <div className="product-card-body">
+        <div className="product-card-name">{p.name}</div>
+        <div className="product-rating">
+          <StarRating rating={p.rating} />
+          <span className="rating-count">({p.reviews})</span>
+        </div>
+        <div className="product-price">
+          <span className="price-current">₹{p.price.toLocaleString('en-IN')}</span>
+          <span className="price-mrp">₹{p.mrp.toLocaleString('en-IN')}</span>
+          <span className="price-off">{p.discount}% OFF</span>
+        </div>
+        <div className="product-card-actions" onClick={e => e.stopPropagation()}>
+          <button className="btn-call" onClick={() => window.open(`tel:${PHONE}`)}>
+            📞 Call for Best Price
+          </button>
+          <a href={waLink(p)} target="_blank" className="btn-wa-sm" title="WhatsApp">💬</a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── PRODUCTS PAGE ────────────────────────────────────────────────────────────
+function ProductsPage({ setPage, setSelectedProduct }) {
+  const [search, setSearch] = useState("");
+  const [cat, setCat] = useState("All");
+  const [brand, setBrand] = useState("All");
+  const [maxPrice, setMaxPrice] = useState(100000);
+
+  const filtered = PRODUCTS.filter(p => {
+    const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
+    const matchCat = cat === "All" || p.category === cat;
+    const matchBrand = brand === "All" || p.brand === brand;
+    const matchPrice = p.price <= maxPrice;
+    return matchSearch && matchCat && matchBrand && matchPrice;
+  });
+
+  return (
+    <div style={{background:"var(--gray-light)",minHeight:"100vh"}}>
+      <MarqueeBanner />
+      <div style={{maxWidth:1280,margin:"0 auto",padding:"24px 16px",display:"grid",gridTemplateColumns:"240px 1fr",gap:24}}>
+        {/* Sidebar filters */}
+        <div>
+          <div className="form-section" style={{position:"sticky",top:80}}>
+            <div className="form-section-title">Filters</div>
+            <div style={{marginBottom:20}}>
+              <div className="form-label" style={{marginBottom:8}}>Search</div>
+              <input className="form-input" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search products..." />
+            </div>
+            <div style={{marginBottom:20}}>
+              <div className="form-label" style={{marginBottom:8}}>Category</div>
+              {["All",...CATEGORIES].map(c => (
+                <div key={c} onClick={() => setCat(c)} style={{padding:"7px 10px",borderRadius:6,cursor:"pointer",background:cat===c?"rgba(232,0,28,.08)":"",color:cat===c?"var(--red)":"",fontWeight:cat===c?600:400,fontSize:13,marginBottom:2,transition:".2s"}}>
+                  {cat===c?"✓ ":""}{c}
+                </div>
+              ))}
+            </div>
+            <div style={{marginBottom:20}}>
+              <div className="form-label" style={{marginBottom:8}}>Brand</div>
+              {["All",...BRANDS].map(b => (
+                <div key={b} onClick={() => setBrand(b)} style={{padding:"7px 10px",borderRadius:6,cursor:"pointer",background:brand===b?"rgba(232,0,28,.08)":"",color:brand===b?"var(--red)":"",fontWeight:brand===b?600:400,fontSize:13,marginBottom:2,transition:".2s"}}>
+                  {brand===b?"✓ ":""}{b}
+                </div>
+              ))}
+            </div>
+            <div>
+              <div className="form-label" style={{marginBottom:8}}>Max Price: ₹{maxPrice.toLocaleString("en-IN")}</div>
+              <input type="range" min={10000} max={100000} step={1000} value={maxPrice} onChange={e => setMaxPrice(+e.target.value)} style={{width:"100%",accentColor:"var(--red)"}} />
+              <div style={{display:"flex",justifyContent:"space-between",fontSize:12,color:"var(--gray)",marginTop:4}}>
+                <span>₹10,000</span><span>₹1,00,000</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Products */}
+        <div>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:16,flexWrap:"wrap",gap:8}}>
+            <div style={{fontSize:14,color:"var(--gray)"}}>Showing <strong>{filtered.length}</strong> products</div>
+            <select className="filter-select">
+              <option>Sort: Recommended</option>
+              <option>Price: Low to High</option>
+              <option>Price: High to Low</option>
+              <option>Top Rated</option>
+            </select>
+          </div>
+          {filtered.length === 0 ? (
+            <div style={{textAlign:"center",padding:60,background:"#fff",borderRadius:12,border:"1px solid var(--gray-mid)"}}>
+              <div style={{fontSize:48,marginBottom:16}}>🔍</div>
+              <div style={{fontSize:18,fontWeight:600}}>No products found</div>
+              <div style={{color:"var(--gray)",marginTop:8}}>Try adjusting your filters</div>
+            </div>
+          ) : (
+            <div className="product-grid">
+              {filtered.map(p => (
+                <ProductCard key={p.id} product={p} setPage={setPage} setSelectedProduct={setSelectedProduct} />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── PRODUCT DETAIL ───────────────────────────────────────────────────────────
+function ProductDetailPage({ product: p, setPage, setOrderProduct }) {
+  const [activeTab, setActiveTab] = useState("details");
+  const [selectedThumb, setSelectedThumb] = useState(0);
+
+  if (!p) return null;
+  const savings = p.mrp - p.price;
+
+  function handleOrder() {
+    setOrderProduct(p);
+    setPage("order");
+  }
+
+  return (
+    <div style={{background:"#fff"}}>
+      <MarqueeBanner />
+      <div className="pd-wrap">
+        {/* Breadcrumb */}
+        <div className="breadcrumb">
+          <a href="#" onClick={e => { e.preventDefault(); setPage("home"); }}>Home</a>
+          <span className="breadcrumb-sep">›</span>
+          <a href="#" onClick={e => { e.preventDefault(); setPage("products"); }}>{p.category}</a>
+          <span className="breadcrumb-sep">›</span>
+          <span style={{color:"var(--black)"}}>{p.name}</span>
+        </div>
+
+        <div className="pd-grid">
+          {/* Gallery */}
+          <div className="pd-gallery">
+            <div className="pd-main-img">
+              <span className="product-badge">{p.discount}% OFF</span>
+              <span style={{fontSize:120}}>{["🌬️","❄️","💨","🌀"][selectedThumb % 4] || p.emoji}</span>
+            </div>
+            <div className="pd-thumbnails">
+              {[p.emoji,"📋","🔧","📦"].map((e,i) => (
+                <div key={i} className={`pd-thumb ${selectedThumb===i?"active":""}`} onClick={() => setSelectedThumb(i)}>{e}</div>
+              ))}
+            </div>
+          </div>
+
+          {/* Info */}
+          <div className="pd-info">
+            <div className="pd-brand">{p.brand}</div>
+            <h1 className="pd-title">{p.name}</h1>
+            <div className="pd-rating-row">
+              <span className="pd-rating-badge">
+                <StarRating rating={Math.floor(p.rating)} /> {p.rating}
+              </span>
+              <span style={{fontSize:14,color:"var(--gray)"}}>({p.reviews} Reviews)</span>
+              <span style={{fontSize:14,color:"var(--gray)"}}>| 200+ bought this month</span>
+            </div>
+            <div className="pd-tags">
+              {p.tags.map(t => <span key={t} className="pd-tag">{t}</span>)}
+            </div>
+
+            <div className="pd-price-row">
+              <span className="pd-price-current">₹{p.price.toLocaleString("en-IN")}</span>
+              <span className="pd-price-mrp">₹{p.mrp.toLocaleString("en-IN")}</span>
+              <span className="pd-price-off">{p.discount}% OFF</span>
+            </div>
+            <div className="pd-tax">Inclusive of all taxes</div>
+
+            <div className="pd-best-price">
+              🔥 <strong>Best Price in Lucknow!</strong>
+              Found it cheaper? We'll beat the price. T&C Apply
+            </div>
+
+            <div className="pd-delivery">
+              📍 Delivering to <strong style={{marginLeft:4}}>Lucknow, Vikas Nagar</strong>
+              <span style={{marginLeft:"auto",color:"var(--red)",fontWeight:600,cursor:"pointer"}}>Change</span>
+            </div>
+
+            <div className="pd-features">
+              <div className="pd-feature"><strong>Free Installation</strong>Standard</div>
+              <div className="pd-feature"><strong>5 Year Warranty</strong>On Compressor</div>
+              <div className="pd-feature"><strong>10 Days Return</strong>Easy Returns</div>
+              <div className="pd-feature"><strong>No Cost EMI</strong>Available</div>
+            </div>
+
+            <a href={waLink(p)} target="_blank" className="pd-cta-primary">
+              💬 Chat on WhatsApp for Best Deal
+            </a>
+            <div style={{display:"flex",gap:10}}>
+              <button className="pd-cta-secondary" style={{flex:1}} onClick={() => window.open(`tel:${PHONE}`)}>
+                📞 Call Now: +91 {PHONE}
+              </button>
+              <button className="pd-cta-secondary" style={{width:44,flex:"none",padding:0}} title="Wishlist">❤️</button>
+            </div>
+
+            {/* Offers */}
+            <div className="pd-offers">
+              <div className="pd-offer">
+                <div className="pd-offer-icon">🏦</div>
+                <div className="pd-offer-title">Bank Offer</div>
+                Get ₹3,000 instant discount on ICICI Bank Credit Cards
+              </div>
+              <div className="pd-offer">
+                <div className="pd-offer-icon">📱</div>
+                <div className="pd-offer-title">No Cost EMI</div>
+                From ₹{Math.floor(p.price/12).toLocaleString("en-IN")}/m on Credit Cards
+              </div>
+              <div className="pd-offer">
+                <div className="pd-offer-icon">🔄</div>
+                <div className="pd-offer-title">Exchange Offer</div>
+                Up to ₹2,000 off on Exchange of Old AC
+              </div>
+            </div>
+
+            {/* Order button */}
+            <button className="btn-primary" style={{width:"100%",marginTop:8,justifyContent:"center"}} onClick={handleOrder}>
+              📋 Submit Order Request
+            </button>
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="pd-tabs">
+          {[
+            {id:"details",label:"Product Details"},
+            {id:"specs",label:"Specifications"},
+            {id:"install",label:"Installation"},
+            {id:"reviews",label:`Reviews (${p.reviews})`},
+            {id:"qa",label:"Q&A"},
+          ].map(t => (
+            <div key={t.id} className={`pd-tab ${activeTab===t.id?"active":""}`} onClick={() => setActiveTab(t.id)}>
+              {t.label}
+            </div>
+          ))}
+        </div>
+
+        <div style={{display:"grid",gridTemplateColumns:"1fr 300px",gap:32}}>
+          <div>
+            {activeTab === "details" && (
+              <div>
+                <div style={{fontSize:18,fontWeight:700,marginBottom:12,fontFamily:"var(--font-display)"}}>Why Choose This AC?</div>
+                <div className="pd-why">
+                  {[
+                    p.highlight,
+                    "PM 2.5 Filter for better air quality",
+                    "Coanda Airflow for uniform cooling",
+                    "Inverter Compressor – Saves up to 65% Energy",
+                    "R32 Refrigerant – Environment Friendly",
+                    "Stabilizer Free Operation (150V~285V)",
+                  ].map((item,i) => (
+                    <div key={i} className="pd-why-item">
+                      <span className="pd-why-icon">✅</span>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {activeTab === "specs" && (
+              <table className="pd-spec-table">
+                <tbody>
+                  {Object.entries(p.specs).map(([k,v]) => (
+                    <tr key={k}>
+                      <td>{k}</td>
+                      <td>{v}</td>
+                    </tr>
+                  ))}
+                  <tr><td>Brand</td><td>{p.brand}</td></tr>
+                  <tr><td>SKU</td><td>{p.sku}</td></tr>
+                  <tr><td>Stock Status</td><td style={{color:"#16a34a",fontWeight:600}}>In Stock ({p.stock} units)</td></tr>
+                </tbody>
+              </table>
+            )}
+            {activeTab === "install" && (
+              <div style={{fontSize:14,lineHeight:1.8}}>
+                <div style={{fontSize:18,fontWeight:700,marginBottom:12,fontFamily:"var(--font-display)"}}>Installation Details</div>
+                <p>🔧 <strong>Free Standard Installation</strong> included with every AC purchase.</p>
+                <p>📅 Our technician will contact you within 24 hours of delivery.</p>
+                <p>⏰ Installation completed within 2-3 hours.</p>
+                <p>📍 Available across all areas of Lucknow.</p>
+                <p>💰 <strong>Additional charges</strong> may apply for extra copper pipe or special mounting requirements.</p>
+              </div>
+            )}
+            {activeTab === "reviews" && (
+              <div className="pd-reviews-wrap">
+                <div className="pd-review-score">
+                  <div className="pd-review-big">{p.rating}</div>
+                  <div style={{color:"var(--gold)",fontSize:20,margin:"6px 0"}}>★★★★★</div>
+                  <div style={{fontSize:13,color:"var(--gray)"}}>{p.reviews} Reviews</div>
+                  <div style={{marginTop:16}}>
+                    {[[5,78],[4,16],[3,4],[2,1],[1,1]].map(([star,pct]) => (
+                      <div key={star} className="pd-review-bar">
+                        <span style={{width:12,textAlign:"right"}}>{star}</span>
+                        <span style={{color:"var(--gold)",fontSize:12}}>★</span>
+                        <div className="bar-track"><div className="bar-fill" style={{width:`${pct}%`}} /></div>
+                        <span style={{width:30}}>{pct}%</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  {[
+                    {name:"Abhishek T.",rating:5,text:"Super cooling and energy efficient. Installation was smooth and quick in Lucknow."},
+                    {name:"Priya S.",rating:4,text:"Great product, very happy with the price. King Electronics gave the best deal in the city!"},
+                    {name:"Rahul M.",rating:5,text:"AC working perfectly in this Lucknow heat. Highly recommend!"},
+                  ].map((r,i) => (
+                    <div key={i} className="review-card">
+                      <div className="review-stars">{"★".repeat(r.rating)}</div>
+                      <div className="review-text">{r.text}</div>
+                      <div className="review-author"><span>– {r.name}</span><span className="verified">✓ Verified Purchase</span></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {activeTab === "qa" && (
+              <div>
+                <div style={{fontSize:16,fontWeight:600,marginBottom:12}}>Frequently Asked Questions</div>
+                {[
+                  {q:"Does it include installation?",a:"Yes, free standard installation is included."},
+                  {q:"Is there warranty?",a:`Yes, ${p.specs.Warranty || "1 Year Product Warranty"}.`},
+                  {q:"Do you deliver in all areas of Lucknow?",a:"Yes, we deliver across all areas of Lucknow."},
+                ].map((qa,i) => (
+                  <div key={i} style={{borderBottom:"1px solid var(--gray-mid)",padding:"14px 0"}}>
+                    <div style={{fontWeight:600,marginBottom:6}}>Q: {qa.q}</div>
+                    <div style={{fontSize:14,color:"var(--gray)"}}>A: {qa.a}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Customer Reviews sidebar */}
+          <div>
+            <div style={{background:"var(--gray-light)",borderRadius:12,padding:16}}>
+              <div style={{fontWeight:700,marginBottom:12}}>Customer Reviews</div>
+              <div style={{fontSize:40,fontWeight:700,fontFamily:"var(--font-display)"}}>{p.rating}</div>
+              <div style={{color:"var(--gold)",marginBottom:4}}>★★★★★</div>
+              <div style={{fontSize:13,color:"var(--gray)",marginBottom:12}}>({p.reviews} Reviews)</div>
+              <div className="review-card" style={{background:"#fff"}}>
+                <div className="review-stars">★★★★★</div>
+                <div className="review-text" style={{fontSize:12}}>"Super cooling and energy efficient. Installation was smooth!"</div>
+                <div className="review-author" style={{fontSize:11}}><span>– Abhishek T.</span><span className="verified">✓ Verified</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Related Products */}
+        <div style={{marginTop:48}}>
+          <div className="section-header">
+            <h2 className="section-title">You May Also <span>Like</span></h2>
+          </div>
+          <div className="product-grid">
+            {PRODUCTS.filter(pr => pr.id !== p.id).slice(0,4).map(pr => (
+              <ProductCard key={pr.id} product={pr} setPage={setPage} setSelectedProduct={() => {}} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── ORDER CONFIRMATION ────────────────────────────────────────────────────────
+function OrderPage({ product: p, setPage }) {
+  const orderId = "KE" + Math.floor(Math.random() * 9000000000 + 1000000000);
+  if (!p) return null;
+  const savings = p.mrp - p.price;
+  const total = p.price - 2000;
+
+  return (
+    <div style={{background:"var(--gray-light)",minHeight:"100vh",padding:"32px 0"}}>
+      <div className="oc-wrap">
+        {/* Success */}
+        <div className="oc-success" style={{position:"relative"}}>
+          <div style={{position:"absolute",inset:0,overflow:"hidden",pointerEvents:"none"}}>
+            {Array.from({length:20}).map((_,i) => (
+              <div key={i} className="confetti-dot" style={{
+                left:`${Math.random()*100}%`,
+                background:`hsl(${Math.random()*360},80%,60%)`,
+                animationDelay:`${Math.random()*1}s`,
+                animationDuration:`${1+Math.random()}s`,
+              }} />
+            ))}
+          </div>
+          <div className="oc-check">✓</div>
+          <div className="oc-title">Order Confirmed!</div>
+          <div className="oc-sub">Thank you for shopping with King Electronics.</div>
+          <div className="oc-msg">We've received your order and it's being processed.</div>
+          <div className="oc-id-box">
+            <div className="oc-id-label">ORDER ID</div>
+            <div className="oc-id">{orderId}</div>
+          </div>
+          <div style={{fontSize:13,color:"var(--gray)",marginTop:12}}>
+            We've sent the order details to your WhatsApp and Email.
+          </div>
+        </div>
+
+        {/* Steps */}
+        <div style={{background:"#fff",borderRadius:12,border:"1px solid var(--gray-mid)",padding:24,marginBottom:24}}>
+          <div className="oc-card-title">WHAT'S NEXT?</div>
+          <div className="oc-steps">
+            <div className="oc-step">
+              <div className="oc-step-icon">💬</div>
+              <strong style={{fontSize:12,color:"var(--black)"}}>We will share updates on WhatsApp</strong>
+              <span>Stay connected!</span>
+            </div>
+            <div className="oc-step-line" />
+            <div className="oc-step">
+              <div className="oc-step-icon">📦</div>
+              <strong style={{fontSize:12,color:"var(--black)"}}>Your order is being confirmed</strong>
+              <span>Sit back and relax</span>
+            </div>
+            <div className="oc-step-line" />
+            <div className="oc-step">
+              <div className="oc-step-icon">🚚</div>
+              <strong style={{fontSize:12,color:"var(--black)"}}>We will deliver it to you soon</strong>
+              <span>Fast & Safe Delivery</span>
+            </div>
+          </div>
+          <div className="oc-ctas">
+            <a href={waLink(p)} target="_blank" className="oc-wa-btn">💬 Track Order on WhatsApp</a>
+            <a href={`tel:${PHONE}`} className="oc-call-btn">📞 Call Us: +91 {PHONE}</a>
+          </div>
+        </div>
+
+        <div className="oc-grid">
+          {/* Order summary */}
+          <div className="oc-card">
+            <div className="oc-card-title">ORDER SUMMARY</div>
+            <div style={{display:"flex",gap:12,alignItems:"center",marginBottom:16,paddingBottom:16,borderBottom:"1px solid var(--gray-mid)"}}>
+              <div style={{width:72,height:72,background:"var(--gray-light)",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center",fontSize:36,flexShrink:0}}>{p.emoji}</div>
+              <div>
+                <div style={{fontWeight:600,fontSize:14,marginBottom:4}}>{p.name}</div>
+                <div style={{fontSize:13,color:"var(--gray)"}}>Qty: 1</div>
+                <div style={{fontSize:16,fontWeight:700,fontFamily:"var(--font-display)"}}>₹{p.price.toLocaleString("en-IN")}</div>
+              </div>
+            </div>
+            <div className="oc-summary-item"><span>Subtotal</span><span>₹{p.price.toLocaleString("en-IN")}</span></div>
+            <div className="oc-summary-item"><span>Delivery Charges</span><span style={{color:"#16a34a",fontWeight:600}}>FREE</span></div>
+            <div className="oc-summary-item"><span>Installation Charges</span><span style={{color:"#16a34a",fontWeight:600}}>FREE</span></div>
+            <div className="oc-summary-item"><span>Discount</span><span style={{color:"var(--red)",fontWeight:600}}>-₹2,000</span></div>
+            <div className="oc-summary-item total"><span>Total Amount</span><span style={{color:"var(--red)"}}>₹{total.toLocaleString("en-IN")}</span></div>
+            <div style={{fontSize:11,color:"var(--gray)",marginBottom:10}}>(Inclusive of all taxes)</div>
+            <div className="oc-savings">🎉 You will save ₹{(savings+2000).toLocaleString("en-IN")} on this order! Yay! Smart choice. 🎉</div>
+            <div style={{marginTop:16,padding:"10px 14px",background:"var(--gray-light)",borderRadius:8,fontSize:12}}>
+              <strong>PAYMENT METHOD</strong><br />
+              <div style={{display:"flex",alignItems:"center",gap:6,marginTop:4}}>
+                💬 Paid via WhatsApp Order
+                <span style={{background:"#e0f2fe",color:"#0369a1",padding:"2px 8px",borderRadius:4,fontSize:11,fontWeight:700}}>LEAD ORDER</span>
+              </div>
+              <div style={{color:"var(--gray)",marginTop:4}}>Payment will be collected during delivery / installation as per discussion on WhatsApp.</div>
+            </div>
+          </div>
+
+          {/* Delivery details */}
+          <div className="oc-card">
+            <div className="oc-card-title">DELIVERY DETAILS</div>
+            <div className="oc-delivery-grid">
+              <div className="oc-delivery-item">
+                <span className="oc-delivery-icon">📍</span>
+                <strong>Delivery Address</strong>
+                <span>Lucknow, Vikas Nagar, Uttar Pradesh – 226001</span>
+              </div>
+              <div className="oc-delivery-item">
+                <span className="oc-delivery-icon">📅</span>
+                <strong>Delivery Date</strong>
+                <span>Expected by 28 May 2025, Wed</span>
+              </div>
+              <div className="oc-delivery-item">
+                <span className="oc-delivery-icon">🕐</span>
+                <strong>Delivery Time</strong>
+                <span>Between 10:00 AM – 08:00 PM</span>
+              </div>
+              <div className="oc-delivery-item">
+                <span className="oc-delivery-icon">🔧</span>
+                <strong>Installation</strong>
+                <span>Our team will contact you for installation.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Upsell */}
+        <div style={{marginTop:32}}>
+          <div className="section-header">
+            <h2 className="section-title">You May Also <span>Need</span></h2>
+            <a href="#" className="view-all">View More Accessories →</a>
+          </div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(160px,1fr))",gap:14}}>
+            {[
+              {name:"V-Guard Stabilizer for 1.5 Ton AC",price:2399,emoji:"🔌"},
+              {name:"AC Copper Pipe (3 Meter)",price:1199,emoji:"🔧"},
+              {name:"AC Installation Kit (Full Set)",price:899,emoji:"🛠️"},
+              {name:"Heavy Duty AC Wall Mount Stand",price:599,emoji:"🏗️"},
+              {name:"3 Year Extended Warranty Plan",price:2499,emoji:"🛡️"},
+            ].map((item,i) => (
+              <div key={i} style={{border:"1px solid var(--gray-mid)",borderRadius:10,padding:14,background:"#fff",textAlign:"center",cursor:"pointer",transition:".2s"}}
+                onMouseEnter={e => e.currentTarget.style.borderColor="var(--red)"}
+                onMouseLeave={e => e.currentTarget.style.borderColor="var(--gray-mid)"}>
+                <div style={{fontSize:40,marginBottom:8}}>{item.emoji}</div>
+                <div style={{fontSize:12,fontWeight:600,marginBottom:6,lineHeight:1.3}}>{item.name}</div>
+                <div style={{fontSize:15,fontWeight:700,color:"var(--red)",fontFamily:"var(--font-display)",marginBottom:8}}>₹{item.price.toLocaleString("en-IN")}</div>
+                <button className="btn-call" style={{width:"100%",fontSize:11,padding:"6px"}}>🛒 ADD TO CART</button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Footer of OC page */}
+        <div style={{background:"var(--black)",borderRadius:16,padding:28,marginTop:32,display:"flex",alignItems:"center",justifyContent:"space-between",gap:20,flexWrap:"wrap"}}>
+          <div>
+            <div style={{color:"#fff",fontFamily:"var(--font-display)",fontSize:20,fontWeight:700,marginBottom:4}}>NEED HELP?</div>
+            <div style={{color:"#999",fontSize:13}}>We're just a message away!</div>
+            <a href={waLink(p)} target="_blank" className="btn-wa" style={{marginTop:12,padding:"10px 20px",fontSize:14}}>💬 CHAT ON WHATSAPP</a>
+          </div>
+          <div style={{display:"flex",gap:24,flexWrap:"wrap"}}>
+            <div style={{textAlign:"center",color:"#ccc",fontSize:12}}>
+              <div style={{fontSize:22,marginBottom:4}}>⚡</div>
+              <div style={{fontWeight:600}}>Quick Response</div>
+              <div style={{color:"#999"}}>On WhatsApp</div>
+            </div>
+            <div style={{textAlign:"center",color:"#ccc",fontSize:12}}>
+              <div style={{fontSize:22,marginBottom:4}}>📞</div>
+              <div style={{fontWeight:600}}>Call Us</div>
+              <div style={{color:"#999"}}>+91 {PHONE}</div>
+            </div>
+            <div style={{textAlign:"center",color:"#ccc",fontSize:12}}>
+              <div style={{fontSize:22,marginBottom:4}}>📍</div>
+              <div style={{fontWeight:600}}>Visit Our Store</div>
+              <div style={{color:"#999"}}>Vikas Nagar, Lucknow</div>
+            </div>
+          </div>
+        </div>
+
+        <div style={{textAlign:"center",margin:"24px 0",display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
+          <button className="btn-primary" onClick={() => setPage("home")}>← Continue Shopping</button>
+          <button className="btn-wa" onClick={() => setPage("products")}>View More Products</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── ADMIN LOGIN ──────────────────────────────────────────────────────────────
+function AdminLogin({ onLogin }) {
+  const [user, setUser] = useState("");
+  const [pass, setPass] = useState("");
+  const [err, setErr] = useState("");
+
+  function handleLogin(e) {
+    e.preventDefault();
+    if (user === "admin" && pass === "king2025") { onLogin(); }
+    else { setErr("Invalid credentials. Try admin / king2025"); }
+  }
+
+  return (
+    <div className="admin-login">
+      <div className="login-card">
+        <div className="login-logo">
+          <div style={{fontSize:40}}>👑</div>
+          <div style={{fontFamily:"var(--font-display)",fontSize:20,fontWeight:700,color:"var(--red)"}}>KING ELECTRONICS</div>
+        </div>
+        <div className="login-title">Admin Login</div>
+        <div className="login-sub">Sign in to manage your store</div>
+        {err && <div className="login-error">{err}</div>}
+        <div style={{display:"flex",flexDirection:"column",gap:14}}>
+          <div className="form-field">
+            <label className="form-label">Username</label>
+            <input className="form-input" value={user} onChange={e => setUser(e.target.value)} placeholder="admin" />
+          </div>
+          <div className="form-field">
+            <label className="form-label">Password</label>
+            <input className="form-input" type="password" value={pass} onChange={e => setPass(e.target.value)} placeholder="••••••••" />
+          </div>
+          <button className="save-btn" onClick={handleLogin}>Sign In →</button>
+        </div>
+        <div style={{textAlign:"center",marginTop:16,fontSize:12,color:"var(--gray)"}}>
+          Demo: admin / king2025
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── ADMIN PANEL ──────────────────────────────────────────────────────────────
+function AdminPanel({ onLogout, setPage }) {
+  const [adminPage, setAdminPage] = useState("products");
+  const [products, setProducts] = useState(PRODUCTS);
+  const [search, setSearch] = useState("");
+
+  const filtered = products.filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
+
+  const navItems = [
+    { section: "MAIN", items: [
+      { id:"dashboard", icon:"📊", label:"Dashboard" },
+      { id:"orders", icon:"📦", label:"Orders", badge:15 },
+      { id:"products", icon:"🛍️", label:"Products" },
+      { id:"categories", icon:"📂", label:"Categories" },
+      { id:"customers", icon:"👥", label:"Customers" },
+      { id:"reviews", icon:"⭐", label:"Reviews" },
+    ]},
+    { section: "INVENTORY", items: [
+      { id:"inventory", icon:"📋", label:"Inventory" },
+      { id:"alerts", icon:"🔔", label:"Stock Alerts" },
+      { id:"suppliers", icon:"🏭", label:"Suppliers" },
+    ]},
+    { section: "MARKETING", items: [
+      { id:"deals", icon:"🏷️", label:"Offers & Deals" },
+      { id:"banners", icon:"🖼️", label:"Banners" },
+      { id:"coupons", icon:"🎟️", label:"Coupons" },
+    ]},
+    { section: "COMMUNICATION", items: [
+      { id:"whatsapp", icon:"💬", label:"WhatsApp", isNew:true },
+      { id:"sms", icon:"📱", label:"SMS" },
+      { id:"email", icon:"📧", label:"Email" },
+    ]},
+    { section: "SETTINGS", items: [
+      { id:"storesettings", icon:"⚙️", label:"Store Settings" },
+      { id:"payment", icon:"💳", label:"Payment Settings" },
+      { id:"users", icon:"👤", label:"Users & Roles" },
+    ]},
+  ];
+
+  return (
+    <div className="admin-layout">
+      {/* Sidebar */}
+      <div className="admin-sidebar">
+        <div className="admin-logo">
+          <div className="admin-logo-text">👑 KING ELECTRONICS</div>
+          <div className="admin-logo-sub">Apki Choice. Humari Priority.</div>
+        </div>
+        {navItems.map(group => (
+          <div key={group.section}>
+            <div className="admin-nav-section">{group.section}</div>
+            {group.items.map(item => (
+              <button key={item.id} className={`admin-nav-link ${adminPage===item.id?"active":""}`} onClick={() => setAdminPage(item.id)}>
+                <span>{item.icon}</span>
+                <span>{item.label}</span>
+                {item.badge && <span className="admin-nav-badge">{item.badge}</span>}
+                {item.isNew && <span className="admin-nav-new">New</span>}
+              </button>
+            ))}
+          </div>
+        ))}
+        <div className="admin-support">
+          <div className="admin-support-title">🎧 Need Help?</div>
+          <div className="admin-support-sub">We're here for you!</div>
+          <button className="admin-support-btn">Contact Support</button>
+        </div>
+      </div>
+
+      {/* Main */}
+      <div className="admin-main">
+        <div className="admin-topbar">
+          <div>
+            <div className="admin-topbar-title">
+              {adminPage === "products" ? "Products" :
+               adminPage === "addproduct" ? "Add New Product" :
+               adminPage.charAt(0).toUpperCase() + adminPage.slice(1)}
+            </div>
+            <div className="admin-topbar-sub">
+              {adminPage === "products" ? "Manage all your products, inventory and pricing." :
+               adminPage === "addproduct" ? "Dashboard › Products › Add New Product" :
+               "King Electronics Admin"}
+            </div>
+          </div>
+          <div className="admin-topbar-right">
+            <button className="admin-visit-btn" onClick={() => setPage("home")}>Visit Store ↗</button>
+            <div className="admin-notif">
+              🔔
+              <div className="admin-notif-badge">3</div>
+            </div>
+            <div style={{display:"flex",alignItems:"center",gap:8}}>
+              <div className="admin-avatar">K</div>
+              <div style={{fontSize:13}}>
+                <div style={{fontWeight:600}}>King Electronics</div>
+                <div style={{color:"var(--gray)",fontSize:11}}>Admin</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="admin-content">
+          {adminPage === "products" && (
+            <>
+              {/* Stats */}
+              <div className="admin-stats">
+                {[
+                  {icon:"📦",label:"Total Products",value:124,sub:"Active Products",color:"rgba(232,0,28,.1)"},
+                  {icon:"📂",label:"Categories",value:12,sub:"Product Categories",color:"rgba(34,197,94,.1)"},
+                  {icon:"📋",label:"Total Inventory",value:568,sub:"Units in Stock",color:"rgba(59,130,246,.1)"},
+                  {icon:"⚠️",label:"Out of Stock",value:8,sub:"Products",color:"rgba(249,115,22,.1)"},
+                ].map((s,i) => (
+                  <div key={i} className="stat-card">
+                    <div className="stat-icon" style={{background:s.color,fontSize:22}}>{s.icon}</div>
+                    <div>
+                      <div className="stat-value">{s.value}</div>
+                      <div className="stat-label">{s.sub}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Table */}
+              <div className="admin-table-wrap">
+                <div className="admin-table-header">
+                  <div className="admin-table-title">All Products</div>
+                  <button className="add-btn" onClick={() => setAdminPage("addproduct")}>+ Add New Product</button>
+                </div>
+                <div className="admin-filters">
+                  <div className="admin-search">
+                    <input className="admin-search-input" placeholder="Search products by name, brand or SKU..." value={search} onChange={e => setSearch(e.target.value)} />
+                    <button className="admin-search-btn">🔍</button>
+                  </div>
+                  <select className="filter-select"><option>All Categories</option>{CATEGORIES.map(c => <option key={c}>{c}</option>)}</select>
+                  <select className="filter-select"><option>All Brands</option>{BRANDS.map(b => <option key={b}>{b}</option>)}</select>
+                  <select className="filter-select"><option>Status: All</option><option>Active</option><option>Inactive</option></select>
+                  <button className="filter-btn">⚙️ Filter</button>
+                  <button className="reset-btn" onClick={() => setSearch("")}>↺ Reset</button>
+                </div>
+                <div style={{overflowX:"auto"}}>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th><input type="checkbox" /></th>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Brand</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filtered.map(p => (
+                        <tr key={p.id}>
+                          <td><input type="checkbox" /></td>
+                          <td>
+                            <div style={{display:"flex",alignItems:"center",gap:12}}>
+                              <div className="prod-img-cell">{p.emoji}</div>
+                              <div>
+                                <div style={{fontWeight:600,fontSize:14}}>{p.name}</div>
+                                <div style={{fontSize:12,color:"var(--gray)"}}>SKU: {p.sku}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td>{p.category}</td>
+                          <td>{p.brand}</td>
+                          <td>
+                            <div style={{fontWeight:700,color:"var(--red)"}}>₹{p.price.toLocaleString("en-IN")}</div>
+                            <div style={{fontSize:12,color:"var(--gray)",textDecoration:"line-through"}}>₹{p.mrp.toLocaleString("en-IN")}</div>
+                          </td>
+                          <td>
+                            <div className={p.stock === 0 ? "stock-out" : p.stock < 10 ? "stock-low" : "stock-ok"}>
+                              {p.stock} Units
+                            </div>
+                            <div style={{fontSize:12,color:"var(--gray)"}}>{p.stock === 0 ? "Out of Stock" : p.stock < 10 ? "Low Stock" : "In Stock"}</div>
+                          </td>
+                          <td>
+                            <span className={p.stock === 0 ? "status-inactive" : "status-active"}>
+                              {p.stock === 0 ? "Inactive" : "Active"}
+                            </span>
+                          </td>
+                          <td>
+                            <div className="action-btns">
+                              <button className="action-btn" title="Edit" onClick={() => setAdminPage("addproduct")}>✏️</button>
+                              <button className="action-btn" title="Duplicate">📋</button>
+                              <button className="action-btn del" title="Delete" onClick={() => setProducts(products.filter(pr => pr.id !== p.id))}>🗑️</button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="admin-pagination">
+                  <div>Showing 1 to {filtered.length} of {filtered.length} products</div>
+                  <div className="page-btns">
+                    <button className="page-btn">‹</button>
+                    <button className="page-btn active">1</button>
+                    <button className="page-btn">2</button>
+                    <button className="page-btn">3</button>
+                    <button className="page-btn">›</button>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {adminPage === "addproduct" && <AddProductForm onBack={() => setAdminPage("products")} />}
+
+          {adminPage === "dashboard" && <AdminDashboard />}
+
+          {!["products","addproduct","dashboard"].includes(adminPage) && (
+            <div style={{background:"#fff",borderRadius:12,border:"1px solid var(--gray-mid)",padding:60,textAlign:"center"}}>
+              <div style={{fontSize:48,marginBottom:16}}>🚧</div>
+              <div style={{fontSize:20,fontWeight:700}}>Coming Soon</div>
+              <div style={{color:"var(--gray)",marginTop:8}}>This section is under development.</div>
+              <button className="btn-primary" style={{marginTop:20}} onClick={() => setAdminPage("products")}>← Back to Products</button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── ADMIN DASHBOARD ──────────────────────────────────────────────────────────
+function AdminDashboard() {
+  return (
+    <div>
+      <div className="admin-stats">
+        {[
+          {icon:"📦",label:"Total Orders",value:156,sub:"This Month",color:"rgba(232,0,28,.1)"},
+          {icon:"💰",label:"Revenue",value:"₹48L",sub:"This Month",color:"rgba(34,197,94,.1)"},
+          {icon:"👥",label:"Customers",value:892,sub:"Total Customers",color:"rgba(59,130,246,.1)"},
+          {icon:"⭐",label:"Avg Rating",value:"4.7",sub:"Store Rating",color:"rgba(249,115,22,.1)"},
+        ].map((s,i) => (
+          <div key={i} className="stat-card">
+            <div className="stat-icon" style={{background:s.color,fontSize:22}}>{s.icon}</div>
+            <div>
+              <div className="stat-value">{s.value}</div>
+              <div className="stat-label">{s.sub}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div style={{background:"#fff",borderRadius:12,border:"1px solid var(--gray-mid)",padding:24}}>
+        <div style={{fontWeight:700,fontSize:18,marginBottom:16}}>Recent Orders</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th><th>Customer</th><th>Product</th><th>Amount</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              {id:"KE123456",cust:"Rahul Sharma",prod:"LG 1.5 Ton 5 Star AC",amt:"₹36,990",status:"Confirmed"},
+              {id:"KE123457",cust:"Priya Singh",prod:"LG 2 Ton 3 Star AC",amt:"₹44,990",status:"Delivered"},
+              {id:"KE123458",cust:"Amit Kumar",prod:"LG Art Cool AC",amt:"₹52,990",status:"Pending"},
+            ].map((o,i) => (
+              <tr key={i}>
+                <td style={{fontWeight:600,color:"var(--red)"}}>{o.id}</td>
+                <td>{o.cust}</td>
+                <td>{o.prod}</td>
+                <td style={{fontWeight:700}}>{o.amt}</td>
+                <td><span className={o.status==="Pending"?"status-inactive":"status-active"}>{o.status}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+// ─── ADD PRODUCT FORM ─────────────────────────────────────────────────────────
+function AddProductForm({ onBack }) {
+  const [isActive, setIsActive] = useState(true);
+  const [isFeatured, setIsFeatured] = useState(false);
+  const [isNewArrival, setIsNewArrival] = useState(false);
+  const [name, setName] = useState("");
+  const [shortDesc, setShortDesc] = useState("");
+  const [price, setPrice] = useState("36990");
+  const [mrp, setMrp] = useState("42990");
+  const [sku, setSku] = useState("AC-LG-15-5S");
+  const [stock, setStock] = useState("15");
+  const [specs, setSpecs] = useState([{key:"Capacity",val:"1.5 Ton"},{key:"Type",val:"Inverter Split AC"},{key:"Star Rating",val:"5 Star"}]);
+  const [saved, setSaved] = useState(false);
+
+  const disc = mrp && price ? Math.round((1 - price/mrp)*100) : 0;
+
+  function addSpec() { setSpecs([...specs,{key:"",val:""}]); }
+  function removeSpec(i) { setSpecs(specs.filter((_,idx) => idx !== i)); }
+
+  function handleSave() {
+    setSaved(true);
+    setTimeout(() => { setSaved(false); onBack(); }, 1500);
+  }
+
+  return (
+    <div style={{display:"grid",gridTemplateColumns:"1fr 280px",gap:20,alignItems:"start"}}>
+      <div>
+        {/* Basic Info */}
+        <div className="form-section">
+          <div className="form-section-title">Basic Information</div>
+          <div className="form-grid">
+            <div className="form-field">
+              <label className="form-label">Product Name <span>*</span></label>
+              <input className="form-input" value={name} onChange={e => setName(e.target.value)} placeholder="Enter product name" />
+            </div>
+            <div className="form-field">
+              <label className="form-label">Category <span>*</span></label>
+              <select className="form-select">
+                <option value="">Select category</option>
+                {CATEGORIES.map(c => <option key={c}>{c}</option>)}
+              </select>
+            </div>
+            <div className="form-field">
+              <label className="form-label">Brand <span>*</span></label>
+              <select className="form-select">
+                <option value="">Select brand</option>
+                {BRANDS.map(b => <option key={b}>{b}</option>)}
+              </select>
+            </div>
+          </div>
+          <div className="form-field" style={{marginBottom:16}}>
+            <label className="form-label">Short Description <span>*</span></label>
+            <textarea className="form-textarea" rows={2} value={shortDesc} onChange={e => setShortDesc(e.target.value.slice(0,150))} placeholder="Enter short description (Max 150 characters)" />
+            <div className="char-count">{shortDesc.length} / 150</div>
+          </div>
+          <div className="form-field">
+            <label className="form-label">Full Description</label>
+            <div style={{border:"1px solid var(--gray-mid)",borderRadius:8,overflow:"hidden"}}>
+              <div style={{borderBottom:"1px solid var(--gray-mid)",padding:"8px 12px",display:"flex",gap:8,background:"#fafafa"}}>
+                {["B","I","U","S","≡","≡","≡","🔗"].map((b,i) => (
+                  <button key={i} style={{border:"none",background:"none",cursor:"pointer",padding:"2px 6px",fontWeight:i===0?"700":i===1?"normal":"normal",fontStyle:i===1?"italic":"normal",fontSize:13}}>{b}</button>
+                ))}
+              </div>
+              <textarea className="form-textarea" rows={4} placeholder="Enter product detailed description..." style={{border:"none",borderRadius:"0 0 8px 8px"}} />
+            </div>
+          </div>
+        </div>
+
+        {/* Images */}
+        <div className="form-section">
+          <div className="form-section-title">Product Images</div>
+          <div style={{fontSize:13,color:"var(--gray)",marginBottom:12}}>Upload high quality images of your product</div>
+          <div className="upload-area">
+            <div className="upload-icon">☁️</div>
+            <div className="upload-text"><strong>Click to upload</strong> or drag and drop</div>
+            <div className="upload-sub">PNG, JPG, WEBP up to 5MB each</div>
+          </div>
+          <div className="img-preview-grid">
+            {["🌬️","❄️","🔧","📦"].map((e,i) => (
+              <div key={i} className={`img-preview-item ${i===0?"main":""}`}>
+                <span style={{fontSize:28,marginTop:i===0?16:0}}>{e}</span>
+                <button className="img-preview-remove">×</button>
+              </div>
+            ))}
+            <div className="img-add-more">
+              <span style={{fontSize:20}}>+</span>
+              <span>Add More</span>
+            </div>
+          </div>
+          <div className="img-tip">💡 Tip: First image will be the product main image</div>
+        </div>
+
+        {/* Specs */}
+        <div className="form-section">
+          <div className="form-section-title">Product Specifications</div>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 32px",gap:8,marginBottom:8}}>
+            <div style={{fontSize:12,fontWeight:600,color:"var(--gray)"}}>Specification Name</div>
+            <div style={{fontSize:12,fontWeight:600,color:"var(--gray)"}}>Specification Value</div>
+            <div></div>
+          </div>
+          {specs.map((s,i) => (
+            <div key={i} className="spec-row">
+              <input className="form-input" value={s.key} onChange={e => { const ns=[...specs]; ns[i]={...ns[i],key:e.target.value}; setSpecs(ns); }} placeholder="e.g. Capacity" />
+              <input className="form-input" value={s.val} onChange={e => { const ns=[...specs]; ns[i]={...ns[i],val:e.target.value}; setSpecs(ns); }} placeholder="e.g. 1.5 Ton" />
+              <button className="del-spec" onClick={() => removeSpec(i)}>🗑️</button>
+            </div>
+          ))}
+          <button className="add-spec-btn" onClick={addSpec}>+ Add Another Specification</button>
+        </div>
+      </div>
+
+      {/* Right panel */}
+      <div>
+        <div className="pub-card" style={{top:70}}>
+          <div style={{display:"flex",gap:8,marginBottom:20}}>
+            <button className="discard-btn" onClick={onBack} style={{flex:1}}>Discard</button>
+            <button className="save-btn" onClick={handleSave} style={{flex:2}}>
+              {saved ? "✅ Saved!" : "Save Product"}
+            </button>
+          </div>
+
+          {/* Publication */}
+          <div className="pub-section-title">Publication</div>
+          <div style={{marginBottom:16}}>
+            <div className="toggle-option">
+              <div>
+                <div className="toggle-label">Active</div>
+                <div className="toggle-sublabel">Product will be visible on store</div>
+              </div>
+              <button className={`toggle ${isActive?"on":""}`} onClick={() => setIsActive(!isActive)} />
+            </div>
+            <div className="toggle-option">
+              <div>
+                <div className="toggle-label">Featured Product</div>
+                <div className="toggle-sublabel">Show on homepage and listings</div>
+              </div>
+              <button className={`toggle ${isFeatured?"on":""}`} onClick={() => setIsFeatured(!isFeatured)} />
+            </div>
+            <div className="toggle-option">
+              <div>
+                <div className="toggle-label">New Arrival</div>
+                <div className="toggle-sublabel">Show in new arrivals section</div>
+              </div>
+              <button className={`toggle ${isNewArrival?"on":""}`} onClick={() => setIsNewArrival(!isNewArrival)} />
+            </div>
+          </div>
+
+          {/* Pricing */}
+          <div className="pub-section-title">Pricing</div>
+          <div className="form-field" style={{marginBottom:10}}>
+            <label className="form-label">Selling Price (₹) <span>*</span></label>
+            <input className="form-input" value={price} onChange={e => setPrice(e.target.value)} />
+          </div>
+          <div className="shipping-grid">
+            <div className="form-field">
+              <label className="form-label">MRP (₹)</label>
+              <input className="form-input" value={mrp} onChange={e => setMrp(e.target.value)} />
+            </div>
+            <div className="form-field">
+              <label className="form-label">Discount (₹)</label>
+              <input className="form-input" value={mrp && price ? mrp - price : ""} readOnly style={{background:"var(--gray-light)"}} />
+            </div>
+          </div>
+          <div className="form-field" style={{marginBottom:4}}>
+            <label className="form-label">Discount (%)</label>
+            <input className="form-input" value={disc} readOnly style={{background:"var(--gray-light)"}} />
+          </div>
+          <div className="pricing-note">Customers will see the selling price. MRP is shown crossed out.</div>
+
+          {/* Inventory */}
+          <div className="pub-section-title" style={{marginTop:16}}>Inventory</div>
+          <div className="form-field" style={{marginBottom:10}}>
+            <label className="form-label">SKU (Stock Keeping Unit) <span>*</span></label>
+            <input className="form-input" value={sku} onChange={e => setSku(e.target.value)} />
+          </div>
+          <div className="form-field" style={{marginBottom:10}}>
+            <label className="form-label">Stock Quantity <span>*</span></label>
+            <input className="form-input" type="number" value={stock} onChange={e => setStock(e.target.value)} />
+          </div>
+          <div className="form-field" style={{marginBottom:4}}>
+            <label className="form-label">Low Stock Alert</label>
+            <input className="form-input" type="number" defaultValue={5} />
+          </div>
+          <div className="pricing-note">You will be notified when stock reaches this level</div>
+
+          {/* Shipping */}
+          <div className="pub-section-title" style={{marginTop:16}}>Shipping & Delivery</div>
+          <div className="shipping-grid">
+            <div className="form-field">
+              <label className="form-label">Delivery Charge</label>
+              <select className="form-select">
+                <option>Free</option>
+                <option>₹199</option>
+                <option>₹299</option>
+              </select>
+            </div>
+            <div className="form-field">
+              <label className="form-label">Installation Charge</label>
+              <select className="form-select">
+                <option>Free</option>
+                <option>₹499</option>
+                <option>₹799</option>
+              </select>
+            </div>
+          </div>
+          <div className="form-field">
+            <label className="form-label">Estimated Delivery</label>
+            <select className="form-select">
+              <option>2 – 3 Days</option>
+              <option>Same Day</option>
+              <option>Next Day</option>
+              <option>3 – 5 Days</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── SMALL FOOTER ─────────────────────────────────────────────────────────────
+function SmallFooter() {
+  return (
+    <div style={{background:"var(--black)",color:"#555",textAlign:"center",padding:"16px",fontSize:12}}>
+      © 2025 King Electronics. All Rights Reserved. | Apki Choice. Humari Priority. ❤️
+    </div>
+  );
+}
+
+// ─── APP ──────────────────────────────────────────────────────────────────────
+function App() {
+  const [page, setPage] = useState("home");
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [orderProduct, setOrderProduct] = useState(null);
+  const [adminLoggedIn, setAdminLoggedIn] = useState(false);
+
+  // Scroll to top on page change
+  useEffect(() => { window.scrollTo(0, 0); }, [page]);
+
+  if (page === "admin") {
+    if (!adminLoggedIn) return <AdminLogin onLogin={() => setAdminLoggedIn(true)} />;
+    return <AdminPanel onLogout={() => { setAdminLoggedIn(false); setPage("home"); }} setPage={setPage} />;
+  }
+
+  return (
+    <div>
+      <TopBar />
+      <Header page={page} setPage={setPage} />
+      {page !== "product" && <Nav setPage={setPage} />}
+
+      <main>
+        {page === "home" && <HomePage setPage={setPage} setSelectedProduct={setSelectedProduct} />}
+        {page === "products" && <ProductsPage setPage={setPage} setSelectedProduct={setSelectedProduct} />}
+        {page === "product" && <ProductDetailPage product={selectedProduct} setPage={setPage} setOrderProduct={setOrderProduct} />}
+        {page === "order" && <OrderPage product={orderProduct} setPage={setPage} />}
+      </main>
+
+      {page !== "home" && <SmallFooter />}
+      <FloatingWA product={selectedProduct} />
+
+      {/* Admin link - bottom corner */}
+      <div style={{position:"fixed",bottom:24,left:24,zIndex:998}}>
+        <button onClick={() => setPage("admin")} style={{background:"var(--black)",color:"#fff",border:"none",padding:"8px 14px",borderRadius:8,fontSize:12,cursor:"pointer",opacity:.7}}>
+          🔐 Admin
+        </button>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
